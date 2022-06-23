@@ -58,7 +58,7 @@ namespace OrientalMedical.WebService.Controllers
             }
         }
 
-        [HttpPut("UpdatePropietario")]
+        [HttpPut]
         public IActionResult UpdatePropietario(int id, [FromBody] DoctorRequestDTOs doctorDTOs)
         {
             try
