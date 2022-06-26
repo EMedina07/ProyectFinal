@@ -10,5 +10,6 @@ namespace OrientalMedical.Services.Interfaces
         void CreateCredentials(string userName, string password);
         bool IsAnUser(string userName, string password);
         UserInformation GetUserDetail(string userName, string password);
+        void UpdatePassword(int personalId, string password);
     }
 }

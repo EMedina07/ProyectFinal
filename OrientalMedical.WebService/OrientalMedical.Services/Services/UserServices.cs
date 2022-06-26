@@ -49,5 +49,15 @@ namespace OrientalMedical.Services.Services
         {
             return _wrapper.UserRepository.IsAnUser(userName, password);
         }
+
+        public void UpdatePassword(int personalId, string password)
+        {
+            Usuarios user = _wrapper.UserRepository.GetByFilter(u => u.PersonalId == personalId)
+                                    .FirstOrDefault();
+
+            user.Clave = password;
+            _wrapper.UserRepository.Update(user);
+            _wrapper.Save();
+        }
     }
 }

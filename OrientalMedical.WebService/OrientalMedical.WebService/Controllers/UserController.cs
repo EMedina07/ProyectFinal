@@ -39,5 +39,20 @@ namespace OrientalMedical.WebService.Controllers
                 return StatusCode(500, ex);
             }
         }
+
+        [HttpPut("CambiarContraseña")]
+        public IActionResult UpdatePassword(int id, string password)
+        {
+            try
+            {
+                _userServices.UpdatePassword(id, password);
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Error del servidor");
+            }
+        }
     }
 }

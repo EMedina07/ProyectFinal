@@ -21,7 +21,7 @@ namespace OrientalMedical.WebService.Controllers
             _services = services;
         }
 
-        [HttpGet]
+        [HttpGet("ObtenerInformacionDelDoctor")]
         public IActionResult GetDoctorDetail(int doctorId)
         {
             try
@@ -36,7 +36,7 @@ namespace OrientalMedical.WebService.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("RegistrarDoctor")]
         public IActionResult CreateDoctor([FromBody] DoctorRequestDTOs doctorDTOs)
         {
             string ocupacion = doctorDTOs.Ocupacion.ToLower();
@@ -67,7 +67,7 @@ namespace OrientalMedical.WebService.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("ModicicarDoctor")]
         public IActionResult UpdatePropietario(int id, [FromBody] DoctorRequestDTOs doctorDTOs)
         {
             try
