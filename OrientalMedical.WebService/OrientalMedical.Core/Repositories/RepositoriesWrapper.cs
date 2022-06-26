@@ -8,6 +8,8 @@ namespace OrientalMedical.Core.Repositories
 {
     public class RepositoriesWrapper : IRepositoriesWrapper
     {
+        public const string PASSWORD = "1234";
+
         private IPersonalRepository _personalRepository = null;
         private IUserRepository _userRepository = null;
         private readonly OrientalMedicalDBContext _context;
@@ -40,6 +42,14 @@ namespace OrientalMedical.Core.Repositories
                 }
 
                 return _userRepository;
+            }
+        }
+
+        public string password
+        {
+            get
+            {
+                return PASSWORD;
             }
         }
 

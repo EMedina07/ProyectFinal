@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using OrientalMedical.Damin.Entities;
+using OrientalMedical.Services.Models;
 using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
 using OrientalMedical.Shared.DataTranfereObject.ResponseDTOs;
 using System;
@@ -14,6 +15,7 @@ namespace OrientalMedical.Services.CustomProfile
         {
             CreateMap<Personal, DoctorResponseDTOs>();
             CreateMap<DoctorRequestDTOs, Personal>();
+            CreateMap<Personal, UserInformation>();
         }
     }
 }

@@ -11,3 +11,16 @@ C:\Users\Dell\source\repos\OrientalMedical.WebService\OrientalMedical.Damin\obj\
 C:\Users\Dell\source\repos\OrientalMedical.WebService\OrientalMedical.Damin\obj\Debug\netcoreapp3.1\OrientalMedical.Damin.dll
 C:\Users\Dell\source\repos\OrientalMedical.WebService\OrientalMedical.Damin\obj\Debug\netcoreapp3.1\OrientalMedical.Damin.pdb
 C:\Users\Dell\source\repos\OrientalMedical.WebService\OrientalMedical.Damin\obj\Debug\netcoreapp3.1\OrientalMedical.Damin.genruntimeconfig.cache
+C:\Users\Dell\Desktop\ProyectoFinal\OrientalMedical.WebService\OrientalMedical.Damin\bin\Debug\netcoreapp3.1\OrientalMedical.Damin.deps.json
+C:\Users\Dell\Desktop\ProyectoFinal\OrientalMedical.WebService\OrientalMedical.Damin\bin\Debug\netcoreapp3.1\OrientalMedical.Damin.runtimeconfig.json
+C:\Users\Dell\Desktop\ProyectoFinal\OrientalMedical.WebService\OrientalMedical.Damin\bin\Debug\netcoreapp3.1\OrientalMedical.Damin.runtimeconfig.dev.json
+C:\Users\Dell\Desktop\ProyectoFinal\OrientalMedical.WebService\OrientalMedical.Damin\bin\Debug\netcoreapp3.1\OrientalMedical.Damin.dll
+C:\Users\Dell\Desktop\ProyectoFinal\OrientalMedical.WebService\OrientalMedical.Damin\bin\Debug\netcoreapp3.1\OrientalMedical.Damin.pdb
+C:\Users\Dell\Desktop\ProyectoFinal\OrientalMedical.WebService\OrientalMedical.Damin\obj\Debug\netcoreapp3.1\OrientalMedical.Damin.csproj.AssemblyReference.cache
+C:\Users\Dell\Desktop\ProyectoFinal\OrientalMedical.WebService\OrientalMedical.Damin\obj\Debug\netcoreapp3.1\OrientalMedical.Damin.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dell\Desktop\ProyectoFinal\OrientalMedical.WebService\OrientalMedical.Damin\obj\Debug\netcoreapp3.1\OrientalMedical.Damin.AssemblyInfoInputs.cache
+C:\Users\Dell\Desktop\ProyectoFinal\OrientalMedical.WebService\OrientalMedical.Damin\obj\Debug\netcoreapp3.1\OrientalMedical.Damin.AssemblyInfo.cs
+C:\Users\Dell\Desktop\ProyectoFinal\OrientalMedical.WebService\OrientalMedical.Damin\obj\Debug\netcoreapp3.1\OrientalMedical.Damin.csproj.CoreCompileInputs.cache
+C:\Users\Dell\Desktop\ProyectoFinal\OrientalMedical.WebService\OrientalMedical.Damin\obj\Debug\netcoreapp3.1\OrientalMedical.Damin.dll
+C:\Users\Dell\Desktop\ProyectoFinal\OrientalMedical.WebService\OrientalMedical.Damin\obj\Debug\netcoreapp3.1\OrientalMedical.Damin.pdb
+C:\Users\Dell\Desktop\ProyectoFinal\OrientalMedical.WebService\OrientalMedical.Damin\obj\Debug\netcoreapp3.1\OrientalMedical.Damin.genruntimeconfig.cache

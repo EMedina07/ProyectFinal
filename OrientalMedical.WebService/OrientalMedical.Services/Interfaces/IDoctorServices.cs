@@ -12,5 +12,6 @@ namespace OrientalMedical.Services.Interfaces
         void RegisterDoctor(DoctorRequestDTOs doctorDTOs);
         void UpdateDoctor(int doctorId, DoctorRequestDTOs doctorDTOs);
         DoctorResponseDTOs GetDoctorDetail(int doctorId);
+        bool IsResgistered(string cedula);
     }
 }

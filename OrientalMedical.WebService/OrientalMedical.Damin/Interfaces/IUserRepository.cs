@@ -7,5 +7,7 @@ namespace OrientalMedical.Damin.Interfaces
 {
     public interface IUserRepository : IRepositorioBase<Usuarios>
     {
+        bool IsAnUser(string userName, string password);
+        int GetUserId(string userName, string password);
     }
 }

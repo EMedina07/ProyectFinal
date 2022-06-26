@@ -7,5 +7,7 @@ namespace OrientalMedical.Damin.Interfaces
 {
     public interface IPersonalRepository : IRepositorioBase<Personal>
     {
+        int GetLastId();
+        bool IsResgistered(string cedula);
     }
 }

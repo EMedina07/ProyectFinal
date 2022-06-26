@@ -39,6 +39,7 @@ namespace OrientalMedical.WebService.Controllers
         [HttpPost]
         public IActionResult CreateDoctor([FromBody] DoctorRequestDTOs doctorDTOs)
         {
+            string ocupacion = doctorDTOs.Ocupacion.ToLower();
             try
             {
                 if (!ModelState.IsValid)
@@ -46,11 +47,19 @@ namespace OrientalMedical.WebService.Controllers
                     return BadRequest("Objecto no valido");
                 }
 
+                if(ocupacion != "doctor")
+                {
+                    return BadRequest($"{ocupacion} no es una ocupacion valida, en este campo debe ingresar doctor");
+                }
+
+                if (_services.IsResgistered(doctorDTOs.Cedula))
+                {
+                    return BadRequest($"Ya hay un doctor registrado con este numero de cedula");
+                }
+
                 _services.RegisterDoctor(doctorDTOs);
 
-                //PropietarioResponseDTO propietarioCreated = _services.LastItem();
-
-                return Ok(); //CreatedAtRoute("GetPropietarioById", new { id = propietarioCreated.Id }, propietarioCreated);
+                return Ok(); 
             }
             catch (Exception)
             {

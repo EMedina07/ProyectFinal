@@ -13,12 +13,14 @@ namespace OrientalMedical.Services.Services
 {
     public class DoctorServices : IDoctorServices
     {
-        private readonly IRepositoriesWrapper _wrapper;
-        private readonly IMapper _mapper;
-        public DoctorServices(IRepositoriesWrapper wrapper, IMapper mapper)
+        private readonly IRepositoriesWrapper _wrapper = null;
+        private readonly IMapper _mapper = null;
+        private readonly IUserServices _userServices = null;
+        public DoctorServices(IRepositoriesWrapper wrapper, IMapper mapper, IUserServices userServices)
         {
             _wrapper = wrapper;
             _mapper = mapper;
+            _userServices = userServices;
         }
         public DoctorResponseDTOs GetDoctorDetail(int doctorId)
         {
@@ -30,12 +32,24 @@ namespace OrientalMedical.Services.Services
             return doctorDTOs;
         }
 
+        public bool IsResgistered(string cedula)
+        {
+            return _wrapper.personalRepository.IsResgistered(cedula);
+        }
+
         public void RegisterDoctor(DoctorRequestDTOs doctorDTOs)
         {
             Personal doctor = _mapper.Map<Personal>(doctorDTOs);
+            
 
             _wrapper.personalRepository.Create(doctor);
             _wrapper.Save();
+
+            string userName = doctor.Nombre.Substring(0, 1).ToUpper() +
+                              doctor.Apellido.Substring(0, 1).ToUpper() +
+                              doctor.Cedula.Substring(5, 4);
+
+            _userServices.CreateCredentials(userName, _wrapper.password);
         }
 
         public void UpdateDoctor(int doctorID, DoctorRequestDTOs doctorDTOs)
