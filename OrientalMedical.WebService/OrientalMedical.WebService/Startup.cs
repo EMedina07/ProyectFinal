@@ -33,6 +33,14 @@ namespace OrientalMedical.WebService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(policy =>
+            {
+                policy.AddPolicy("CorsPolicy", opt => opt
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
+
             services.AddDbContext<OrientalMedicalDBContext>(confi =>
             confi.UseSqlServer(Configuration.GetConnectionString("Connection")));
 
@@ -57,6 +65,8 @@ namespace OrientalMedical.WebService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseSwagger();
 
