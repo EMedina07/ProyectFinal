@@ -15,9 +15,16 @@ namespace OrientalMedical.Core.Repositories
             _context = context;
         }
 
-        public bool IsCurrentPassWord(string password)
+        public bool IsCurrentPassWord(int personalId, string password)
         {
-            return this.GetAll().Select(u => u.Clave).Contains(password);
+            Usuarios user = this.GetAll().Where(u => u.PersonalId == personalId).FirstOrDefault();
+            
+            if(user.Clave != password)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public int GetUserId(string userName, string password)

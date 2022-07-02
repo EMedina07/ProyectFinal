@@ -46,7 +46,7 @@ namespace OrientalMedical.WebService.Controllers
         {
             try
             {
-                if (_userServices.IsCurrentPassWord(shangePasswordDTOs.CurrentPassword))
+                if (!_userServices.IsCurrentPassWord(personalId, shangePasswordDTOs.CurrentPassword))
                 {
                     return BadRequest("La contraseña actual es incorrecta");
                 }

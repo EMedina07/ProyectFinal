@@ -9,6 +9,6 @@ namespace OrientalMedical.Damin.Interfaces
     {
         bool IsAnUser(string userName, string password);
         int GetUserId(string userName, string password);
-        bool IsCurrentPassWord(string password);
+        bool IsCurrentPassWord(int personalId, string password);
     }
 }

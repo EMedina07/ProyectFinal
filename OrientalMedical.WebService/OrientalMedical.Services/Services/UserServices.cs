@@ -50,9 +50,9 @@ namespace OrientalMedical.Services.Services
             return _wrapper.UserRepository.IsAnUser(userName, password);
         }
 
-        public bool IsCurrentPassWord(string password)
+        public bool IsCurrentPassWord(int personalId, string password)
         {
-            return _wrapper.UserRepository.IsCurrentPassWord(password);
+            return _wrapper.UserRepository.IsCurrentPassWord(personalId, password);
         }
 
         public void UpdatePassword(int personalId, string password)
