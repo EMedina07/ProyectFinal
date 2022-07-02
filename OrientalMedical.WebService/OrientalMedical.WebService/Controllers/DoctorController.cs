@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OrientalMedical.Damin.Entities;
 using OrientalMedical.Services.Interfaces;
+using OrientalMedical.Services.Validations;
 using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,6 @@ namespace OrientalMedical.WebService.Controllers
         [HttpPost("RegistrarDoctor")]
         public IActionResult CreateDoctor([FromBody] DoctorRequestDTOs doctorDTOs)
         {
-            string ocupacion = doctorDTOs.Ocupacion.ToLower();
             try
             {
                 if (!ModelState.IsValid)
@@ -47,9 +47,19 @@ namespace OrientalMedical.WebService.Controllers
                     return BadRequest("Objecto no valido");
                 }
 
-                if(ocupacion != "doctor")
+                if(!PersonalValidations.IsDoctor(doctorDTOs.Ocupacion))
                 {
-                    return BadRequest($"{ocupacion} no es una ocupacion valida, en este campo debe ingresar doctor");
+                    return BadRequest($"{doctorDTOs.Ocupacion} no es una ocupacion valida, en este campo debe ingresar doctor");
+                }
+
+                if (!PersonalValidations.CelulaContainChar(doctorDTOs.Cedula))
+                {
+                    return BadRequest("La cedula solo debe contener numeros");
+                }
+
+                if (!PersonalValidations.CelulaLengthIsValid(doctorDTOs.Cedula))
+                {
+                    return BadRequest("La cedula solo debe contener 11 caracteres numericos");
                 }
 
                 if (_services.IsResgistered(doctorDTOs.Cedula))
@@ -63,7 +73,7 @@ namespace OrientalMedical.WebService.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "Error del servidor");
+                return StatusCode(500, $"Error del servidor");
             }
         }
 
@@ -75,6 +85,26 @@ namespace OrientalMedical.WebService.Controllers
                 if (doctorDTOs == null)
                 {
                     return BadRequest("Objecto no valido");
+                }
+
+                if (!PersonalValidations.IsDoctor(doctorDTOs.Ocupacion))
+                {
+                    return BadRequest($"{doctorDTOs.Ocupacion} no es una ocupacion valida, en este campo debe ingresar doctor");
+                }
+
+                if (!PersonalValidations.CelulaContainChar(doctorDTOs.Cedula))
+                {
+                    return BadRequest("La cedula solo debe contener numeros");
+                }
+
+                if (!PersonalValidations.CelulaLengthIsValid(doctorDTOs.Cedula))
+                {
+                    return BadRequest("La cedula solo debe contener 11 caracteres numericos");
+                }
+
+                if (_services.IsResgistered(doctorDTOs.Cedula))
+                {
+                    return BadRequest($"Ya hay un doctor registrado con este numero de cedula");
                 }
 
                 _services.UpdateDoctor(id, doctorDTOs);

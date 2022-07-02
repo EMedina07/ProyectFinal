@@ -40,6 +40,7 @@ namespace OrientalMedical.Services.Services
         public void RegisterDoctor(DoctorRequestDTOs doctorDTOs)
         {
             Personal doctor = _mapper.Map<Personal>(doctorDTOs);
+            doctor.Ocupacion = doctorDTOs.Ocupacion.ToLower();
             
 
             _wrapper.personalRepository.Create(doctor);
@@ -55,8 +56,9 @@ namespace OrientalMedical.Services.Services
         public void UpdateDoctor(int doctorID, DoctorRequestDTOs doctorDTOs)
         {
             Personal doctor = _mapper.Map<Personal>(doctorDTOs);
-
+            doctor.Ocupacion = doctorDTOs.Ocupacion.ToLower();
             doctor.PersonalId = doctorID;
+
             _wrapper.personalRepository.Update(doctor);
 
             _wrapper.Save();
