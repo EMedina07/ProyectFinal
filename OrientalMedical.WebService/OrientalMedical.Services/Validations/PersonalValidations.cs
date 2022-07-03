@@ -28,6 +28,18 @@ namespace OrientalMedical.Services.Validations
             return true;
         }
 
+        public static bool IsOperator(string ocupation)
+        {
+            ocupation = ocupation.ToLower();
+
+            if (ocupation != "operador")
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public static bool CelulaContainChar(string celula)
         {
             try

@@ -6,7 +6,8 @@ namespace OrientalMedical.Damin.Interfaces
 {
     public interface IRepositoriesWrapper
     {
-        string password { get; }
+        string Password { get; }
+        string Operador { get; }
         IPersonalRepository personalRepository { get; }
         IUserRepository UserRepository { get; }
 

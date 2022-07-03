@@ -32,6 +32,11 @@ namespace OrientalMedical.Services.Services
             return doctorDTOs;
         }
 
+        public bool IsNewCedula(int personalId, string cedula)
+        {
+            return _wrapper.personalRepository.IsNewCedula(personalId, cedula);
+        }
+
         public bool IsResgistered(string cedula)
         {
             return _wrapper.personalRepository.IsResgistered(cedula);
@@ -50,7 +55,7 @@ namespace OrientalMedical.Services.Services
                               doctor.Apellido.Substring(0, 1).ToUpper() +
                               doctor.Cedula.Substring(5, 4);
 
-            _userServices.CreateCredentials(userName, _wrapper.password);
+            _userServices.CreateCredentials(userName, _wrapper.Password);
         }
 
         public void UpdateDoctor(int doctorID, DoctorRequestDTOs doctorDTOs)

@@ -26,7 +26,7 @@ namespace OrientalMedical.Services.Services
         {
             Usuarios user = new Usuarios();
             user.Usuario = userName;
-            user.Clave = _wrapper.password;
+            user.Clave = _wrapper.Password;
             user.PersonalId = _wrapper.personalRepository.GetLastId();
 
             _wrapper.UserRepository.Create(user);

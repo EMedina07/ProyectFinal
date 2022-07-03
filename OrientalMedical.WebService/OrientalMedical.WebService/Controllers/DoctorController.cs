@@ -66,7 +66,7 @@ namespace OrientalMedical.WebService.Controllers
 
                 if (_services.IsResgistered(doctorDTOs.Cedula))
                 {
-                    return BadRequest($"Ya hay un doctor registrado con este numero de cedula");
+                    return BadRequest($"Ya hay un perfil registrado con este numero de cedula");
                 }
 
                 _services.RegisterDoctor(doctorDTOs);
@@ -80,7 +80,7 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpPut("ModicicarDoctor")]
-        public IActionResult UpdatePropietario(int id, [FromBody] DoctorRequestDTOs doctorDTOs)
+        public IActionResult UpdateDoctor(int id, [FromBody] DoctorRequestDTOs doctorDTOs)
         {
             try
             {
@@ -99,14 +99,12 @@ namespace OrientalMedical.WebService.Controllers
                     return BadRequest("La cedula solo debe contener numeros");
                 }
 
-                if (!PersonalValidations.CelulaLengthIsValid(doctorDTOs.Cedula))
+                if (!_services.IsNewCedula(id, doctorDTOs.Cedula))
                 {
-                    return BadRequest("La cedula solo debe contener 11 caracteres numericos");
-                }
-
-                if (_services.IsResgistered(doctorDTOs.Cedula))
-                {
-                    return BadRequest($"Ya hay un doctor registrado con este numero de cedula");
+                    if (_services.IsResgistered(doctorDTOs.Cedula))
+                    {
+                        return BadRequest($"Ya hay un perfil registrado con este numero de cedula");
+                    }
                 }
 
                 _services.UpdateDoctor(id, doctorDTOs);
