@@ -13,6 +13,8 @@ namespace OrientalMedical.Core.Repositories
 
         private IPersonalRepository _personalRepository = null;
         private IUserRepository _userRepository = null;
+        private IEspecialidadRepository _especialidadRepository = null;
+
         private readonly OrientalMedicalDBContext _context;
 
         public RepositoriesWrapper(OrientalMedicalDBContext context)
@@ -59,6 +61,19 @@ namespace OrientalMedical.Core.Repositories
             get
             {
                 return OPERADOR;
+            }
+        }
+
+        public IEspecialidadRepository EspecialidadRepository
+        {
+            get
+            {
+                if (_especialidadRepository == null)
+                {
+                    _especialidadRepository = new EspecialidadRepository(_context);
+                }
+
+                return _especialidadRepository;
             }
         }
 

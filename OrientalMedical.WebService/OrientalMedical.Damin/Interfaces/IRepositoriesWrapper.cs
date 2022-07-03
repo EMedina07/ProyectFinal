@@ -8,8 +8,10 @@ namespace OrientalMedical.Damin.Interfaces
     {
         string Password { get; }
         string Operador { get; }
+
         IPersonalRepository personalRepository { get; }
         IUserRepository UserRepository { get; }
+        IEspecialidadRepository EspecialidadRepository { get; }
 
         void Save();
     }

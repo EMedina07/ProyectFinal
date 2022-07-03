@@ -19,6 +19,8 @@ namespace OrientalMedical.Services.CustomProfile
             CreateMap<Usuarios, UserResponseDTOs>();
             CreateMap<OperadorRequestDTOs, Personal>();
             CreateMap<Personal, OperadorResponseDTOs>();
+            CreateMap<EspecialidadRequestDTOs, Especialidad>();
+            CreateMap<Especialidad, EspecialidadResponseDTOs>();
         }
     }
 }
