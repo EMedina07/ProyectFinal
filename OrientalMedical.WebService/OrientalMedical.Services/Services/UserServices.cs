@@ -3,6 +3,7 @@ using OrientalMedical.Damin.Entities;
 using OrientalMedical.Damin.Interfaces;
 using OrientalMedical.Services.Interfaces;
 using OrientalMedical.Services.Models;
+using OrientalMedical.Shared.DataTranfereObject.ResponseDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,19 @@ namespace OrientalMedical.Services.Services
             UserInformation userInformation = _mapper.Map<UserInformation>(personal);
 
             return userInformation;
+        }
+
+        public UserResponseDTOs GetCredentials(string cedula)
+        {
+            int personalId = _wrapper.personalRepository.GetAll().Where(p => p.Cedula == cedula)
+                                                .FirstOrDefault().PersonalId;
+
+            Usuarios user = _wrapper.UserRepository.GetAll().Where(u => u.PersonalId == personalId)
+                                .FirstOrDefault();
+
+            UserResponseDTOs credentials = _mapper.Map<UserResponseDTOs>(user);
+
+            return credentials;
         }
 
         public bool IsAnUser(string userName, string password)

@@ -10,9 +10,15 @@ namespace OrientalMedical.Core.Repositories
     class UserRepository : BaseRepository<Usuarios>, IUserRepository
     {
         private readonly OrientalMedicalDBContext _context;
-        public UserRepository(OrientalMedicalDBContext context) : base(context)
+        private readonly IPersonalRepository _personalRepository;
+        public UserRepository(OrientalMedicalDBContext context, IPersonalRepository personalRepository) : base(context)
         {
             _context = context;
+            _personalRepository = personalRepository;
+        }
+
+        public UserRepository(OrientalMedicalDBContext context) : base(context)
+        {
         }
 
         public bool IsCurrentPassWord(int personalId, string password)

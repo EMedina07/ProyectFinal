@@ -1,4 +1,5 @@
 ﻿using OrientalMedical.Services.Models;
+using OrientalMedical.Shared.DataTranfereObject.ResponseDTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,5 +13,6 @@ namespace OrientalMedical.Services.Interfaces
         UserInformation GetUserDetail(string userName, string password);
         void UpdatePassword(int personalId, string password);
         bool IsCurrentPassWord(int personalId, string password);
+        UserResponseDTOs GetCredentials(string cedula);
     }
 }

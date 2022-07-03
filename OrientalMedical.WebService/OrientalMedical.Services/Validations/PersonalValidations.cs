@@ -32,7 +32,7 @@ namespace OrientalMedical.Services.Validations
         {
             try
             {
-                int.Parse(celula);
+                long.Parse(celula);
             }
             catch (Exception)
             {

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace OrientalMedical.Core.Repositories
 {
-    class PersonalRepository : BaseRepository<Personal>, IPersonalRepository
+    public class PersonalRepository : BaseRepository<Personal>, IPersonalRepository
     {
         private readonly OrientalMedicalDBContext _context;
         public PersonalRepository(OrientalMedicalDBContext context) : base(context)

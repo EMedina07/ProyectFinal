@@ -16,10 +16,12 @@ namespace OrientalMedical.WebService.Controllers
     public class DoctorController : ControllerBase
     {
         private readonly IDoctorServices _services;
+        private readonly IUserServices _userServices;
 
-        public DoctorController(IDoctorServices services)
+        public DoctorController(IDoctorServices services, IUserServices userServices)
         {
             _services = services;
+            _userServices = userServices;
         }
 
         [HttpGet("ObtenerInformacionDelDoctor")]
@@ -69,7 +71,7 @@ namespace OrientalMedical.WebService.Controllers
 
                 _services.RegisterDoctor(doctorDTOs);
 
-                return Ok(); 
+                return Ok(_userServices.GetCredentials(doctorDTOs.Cedula)); 
             }
             catch (Exception)
             {

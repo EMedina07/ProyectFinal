@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OrientalMedical.Services.Interfaces;
+using OrientalMedical.Services.Models;
 using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
 using System;
 using System.Collections.Generic;
@@ -21,19 +22,19 @@ namespace OrientalMedical.WebService.Controllers
             _userServices = userServices;
         }
 
-        [HttpGet("Login")]
-        public IActionResult UserAccess(string userName, string password)
+        [HttpPost("Login")]
+        public IActionResult UserAccess(User user)
         {
             try
             {
-                if (_userServices.IsAnUser(userName, password) != true)
+                if (_userServices.IsAnUser(user.UserName, user.Password) != true)
                 {
                     return BadRequest("Usuario o contraseña incorrecto");
                 }
 
-                var user = _userServices.GetUserDetail(userName, password);
+                var userDetail = _userServices.GetUserDetail(user.UserName, user.Password);
 
-                return Ok(user);
+                return Ok(userDetail);
             }
             catch (Exception ex)
             {
