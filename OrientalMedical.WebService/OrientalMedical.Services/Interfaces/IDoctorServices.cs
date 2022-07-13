@@ -1,5 +1,4 @@
-﻿using OrientalMedical.Damin.Entities;
-using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
+﻿using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
 using OrientalMedical.Shared.DataTranfereObject.ResponseDTOs;
 using System;
 using System.Collections.Generic;

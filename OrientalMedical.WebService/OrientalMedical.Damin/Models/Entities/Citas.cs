@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OrientalMedical.Damin.Entities
+namespace OrientalMedical.Damin.Models.Entities
 {
     public partial class Citas
     {
@@ -10,8 +10,11 @@ namespace OrientalMedical.Damin.Entities
         public int DoctorId { get; set; }
         public int PacienteId { get; set; }
         public int Estado { get; set; }
+        public string Comentario { get; set; }
+        public string Diagnostico { get; set; }
 
         public virtual Personal Doctor { get; set; }
+        public virtual Especialidad Especialidad { get; set; }
         public virtual Paciente Paciente { get; set; }
     }
 }

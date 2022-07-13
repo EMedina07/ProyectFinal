@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/HRf+YPTD3Kv6YkXjVqq1+118PQFLyNObg7rm/z8bQoaOpuhZEtKy5haEm+pCQI2DK3XCDEb6h67wPtxFVHzPA==",
+  "dgSpecHash": "ZW9KKot2As+GB9twmj5B/NSZwpXKPmDDAEll9Zm6hMNL8EOpp5iltUO2gaSEywamyRgOg3PLiw9WMVoSzaPQOg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\OrientalMedical.WebService\\OrientalMedical.WebService\\OrientalMedical.WebService.csproj",
+  "projectFilePath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.WebService\\OrientalMedical.WebService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dell\\.nuget\\packages\\automapper\\6.1.1\\automapper.6.1.1.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\3.2.0\\automapper.extensions.microsoft.dependencyinjection.3.2.0.nupkg.sha512",

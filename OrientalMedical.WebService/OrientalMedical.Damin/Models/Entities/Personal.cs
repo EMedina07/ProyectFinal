@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OrientalMedical.Damin.Entities
+namespace OrientalMedical.Damin.Models.Entities
 {
     public partial class Personal
     {
         public Personal()
         {
             Citas = new HashSet<Citas>();
+            EspecialidadAsitente = new HashSet<Especialidad>();
             EspecialidadDoctor = new HashSet<Especialidad>();
-            EspecialidadSecreteria = new HashSet<Especialidad>();
             InverseDoctor = new HashSet<Personal>();
         }
 
@@ -23,8 +23,8 @@ namespace OrientalMedical.Damin.Entities
         public virtual Personal Doctor { get; set; }
         public virtual Usuarios Usuarios { get; set; }
         public virtual ICollection<Citas> Citas { get; set; }
+        public virtual ICollection<Especialidad> EspecialidadAsitente { get; set; }
         public virtual ICollection<Especialidad> EspecialidadDoctor { get; set; }
-        public virtual ICollection<Especialidad> EspecialidadSecreteria { get; set; }
         public virtual ICollection<Personal> InverseDoctor { get; set; }
     }
 }

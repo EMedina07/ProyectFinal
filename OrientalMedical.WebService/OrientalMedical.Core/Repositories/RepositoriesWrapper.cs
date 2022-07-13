@@ -1,5 +1,5 @@
-﻿using OrientalMedical.Damin.Entities;
-using OrientalMedical.Damin.Interfaces;
+﻿using OrientalMedical.Damin.Interfaces;
+using OrientalMedical.Damin.Models.Context;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,10 +14,11 @@ namespace OrientalMedical.Core.Repositories
         private IPersonalRepository _personalRepository = null;
         private IUserRepository _userRepository = null;
         private IEspecialidadRepository _especialidadRepository = null;
+        private IAdministradorRepository _administradorRepository = null;
 
-        private readonly OrientalMedicalDBContext _context;
+        private readonly OrientalMedicalSystemDBContext _context;
 
-        public RepositoriesWrapper(OrientalMedicalDBContext context)
+        public RepositoriesWrapper(OrientalMedicalSystemDBContext context)
         {
             _context = context;
         }
@@ -74,6 +75,19 @@ namespace OrientalMedical.Core.Repositories
                 }
 
                 return _especialidadRepository;
+            }
+        }
+
+        public IAdministradorRepository AdministradorRepository
+        {
+            get
+            {
+                if(_administradorRepository == null)
+                {
+                    _administradorRepository = new AdministradorRepository(_context);
+                }
+
+                return _administradorRepository;
             }
         }
 

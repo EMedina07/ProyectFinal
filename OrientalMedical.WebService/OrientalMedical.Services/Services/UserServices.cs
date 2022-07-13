@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using OrientalMedical.Damin.Entities;
 using OrientalMedical.Damin.Interfaces;
+using OrientalMedical.Damin.Models.Entities;
 using OrientalMedical.Services.Interfaces;
 using OrientalMedical.Services.Models;
 using OrientalMedical.Shared.DataTranfereObject.ResponseDTOs;
@@ -73,6 +73,16 @@ namespace OrientalMedical.Services.Services
         {
             Usuarios user = _wrapper.UserRepository.GetByFilter(u => u.PersonalId == personalId)
                                     .FirstOrDefault();
+
+            user.Clave = password;
+            _wrapper.UserRepository.Update(user);
+            _wrapper.Save();
+        }
+
+        public void UpdatePasswordByUserId(int userId, string password)
+        {
+            Usuarios user = _wrapper.UserRepository.GetByFilter(u => u.UsuarioId == userId)
+                                   .FirstOrDefault();
 
             user.Clave = password;
             _wrapper.UserRepository.Update(user);

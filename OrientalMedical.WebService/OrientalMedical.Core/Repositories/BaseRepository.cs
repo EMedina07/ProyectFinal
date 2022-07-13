@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OrientalMedical.Damin.Entities;
 using OrientalMedical.Damin.Interfaces;
+using OrientalMedical.Damin.Models.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +11,8 @@ namespace OrientalMedical.Core.Repositories
 {
     public abstract class BaseRepository<TEntity> : IRepositorioBase<TEntity> where TEntity : class
     {
-        private readonly OrientalMedicalDBContext _context;
-        public BaseRepository(OrientalMedicalDBContext context)
+        private readonly OrientalMedicalSystemDBContext _context;
+        public BaseRepository(OrientalMedicalSystemDBContext context)
         {
             _context = context;
         }

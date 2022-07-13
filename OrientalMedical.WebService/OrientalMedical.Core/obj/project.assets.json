@@ -4979,11 +4979,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\OrientalMedical.WebService\\OrientalMedical.Core\\OrientalMedical.Core.csproj",
+      "projectUniqueName": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.Core\\OrientalMedical.Core.csproj",
       "projectName": "OrientalMedical.Core",
-      "projectPath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\OrientalMedical.WebService\\OrientalMedical.Core\\OrientalMedical.Core.csproj",
+      "projectPath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.Core\\OrientalMedical.Core.csproj",
       "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\OrientalMedical.WebService\\OrientalMedical.Core\\obj\\",
+      "outputPath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -5005,8 +5005,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\OrientalMedical.WebService\\OrientalMedical.Damin\\OrientalMedical.Damin.csproj": {
-              "projectPath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\OrientalMedical.WebService\\OrientalMedical.Damin\\OrientalMedical.Damin.csproj"
+            "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.Damin\\OrientalMedical.Damin.csproj": {
+              "projectPath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.Damin\\OrientalMedical.Damin.csproj"
             }
           }
         }

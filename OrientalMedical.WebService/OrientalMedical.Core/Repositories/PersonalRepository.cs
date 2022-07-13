@@ -1,5 +1,6 @@
-﻿using OrientalMedical.Damin.Entities;
-using OrientalMedical.Damin.Interfaces;
+﻿using OrientalMedical.Damin.Interfaces;
+using OrientalMedical.Damin.Models.Context;
+using OrientalMedical.Damin.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace OrientalMedical.Core.Repositories
 {
     public class PersonalRepository : BaseRepository<Personal>, IPersonalRepository
     {
-        private readonly OrientalMedicalDBContext _context;
-        public PersonalRepository(OrientalMedicalDBContext context) : base(context)
+        private readonly OrientalMedicalSystemDBContext _context;
+        public PersonalRepository(OrientalMedicalSystemDBContext context) : base(context)
         {
             _context = context;
         }

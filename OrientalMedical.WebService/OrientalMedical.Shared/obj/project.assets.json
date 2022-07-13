@@ -3633,11 +3633,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\OrientalMedical.WebService\\OrientalMedical.Shared\\OrientalMedical.Shared.csproj",
+      "projectUniqueName": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.Shared\\OrientalMedical.Shared.csproj",
       "projectName": "OrientalMedical.Shared",
-      "projectPath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\OrientalMedical.WebService\\OrientalMedical.Shared\\OrientalMedical.Shared.csproj",
+      "projectPath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.Shared\\OrientalMedical.Shared.csproj",
       "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\OrientalMedical.WebService\\OrientalMedical.Shared\\obj\\",
+      "outputPath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.Shared\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

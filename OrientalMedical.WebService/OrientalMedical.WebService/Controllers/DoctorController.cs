@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OrientalMedical.Damin.Entities;
 using OrientalMedical.Services.Interfaces;
 using OrientalMedical.Services.Validations;
 using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OrientalMedical.Damin.Entities
+namespace OrientalMedical.Damin.Models.Entities
 {
     public partial class Usuarios
     {

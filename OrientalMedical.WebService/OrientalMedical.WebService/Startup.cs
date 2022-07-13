@@ -10,8 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OrientalMedical.Core.Repositories;
-using OrientalMedical.Damin.Entities;
 using OrientalMedical.Damin.Interfaces;
+using OrientalMedical.Damin.Models.Context;
 using OrientalMedical.Services.Interfaces;
 using OrientalMedical.Services.Services;
 using System;
@@ -41,7 +41,7 @@ namespace OrientalMedical.WebService
                     .AllowAnyMethod());
             });
 
-            services.AddDbContext<OrientalMedicalDBContext>(confi =>
+            services.AddDbContext<OrientalMedicalSystemDBContext>(confi =>
             confi.UseSqlServer(Configuration.GetConnectionString("Connection")));
 
             services.AddSwaggerGen(c =>
@@ -54,6 +54,7 @@ namespace OrientalMedical.WebService
             services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IOperadorServices, OperadorServices>();
             services.AddScoped<IEspecialidadServices, EspecialidadServices>();
+            services.AddScoped<IAdministradorServices, AdministradorServices>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

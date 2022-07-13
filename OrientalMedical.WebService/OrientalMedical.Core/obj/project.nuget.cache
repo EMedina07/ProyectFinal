@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gHjWQytipxlbbH1GHNjyaPY5gP8XqRq/HzGLtevwjgM/7X+tFTw1L8B2DGAUZGgUEyPh7by8R2v/2VEfCDpQ8w==",
+  "dgSpecHash": "+huaJHJfAn/AI3to/GfJ0vRoYPgK007vmZxy+triPT25qLk2ytodo+3Im61G00Q9UVOBqHNGiYOpF6eX4KlXng==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\OrientalMedical.WebService\\OrientalMedical.Core\\OrientalMedical.Core.csproj",
+  "projectFilePath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.Core\\OrientalMedical.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.0\\microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",

@@ -1,4 +1,4 @@
-﻿using OrientalMedical.Damin.Entities;
+﻿using OrientalMedical.Damin.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

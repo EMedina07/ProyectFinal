@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using OrientalMedical.Damin.Entities;
 using OrientalMedical.Damin.Interfaces;
+using OrientalMedical.Damin.Models.Entities;
 using OrientalMedical.Services.Interfaces;
 using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
 using OrientalMedical.Shared.DataTranfereObject.ResponseDTOs;
