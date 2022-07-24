@@ -9,6 +9,7 @@ namespace OrientalMedical.Shared.DataTranfereObject.RequestDTOs
         public string Especialidad1 { get; set; }
         public int DoctorId { get; set; }
         public int? SecreteriaId { get; set; }
-        public int? TotalPacientes { get; set; }
+        public string HoraInicio { get; set; }
+        public string HoraFin { get; set; }
     }
 }

@@ -7,6 +7,7 @@ namespace OrientalMedical.Damin.Models.Entities
     {
         public Personal()
         {
+            Ausencia = new HashSet<Ausencia>();
             Citas = new HashSet<Citas>();
             EspecialidadAsitente = new HashSet<Especialidad>();
             EspecialidadDoctor = new HashSet<Especialidad>();
@@ -22,6 +23,7 @@ namespace OrientalMedical.Damin.Models.Entities
 
         public virtual Personal Doctor { get; set; }
         public virtual Usuarios Usuarios { get; set; }
+        public virtual ICollection<Ausencia> Ausencia { get; set; }
         public virtual ICollection<Citas> Citas { get; set; }
         public virtual ICollection<Especialidad> EspecialidadAsitente { get; set; }
         public virtual ICollection<Especialidad> EspecialidadDoctor { get; set; }

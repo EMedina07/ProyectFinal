@@ -1,4 +1,5 @@
-﻿using OrientalMedical.Damin.Models.DTOs;
+﻿using OrientalMedical.Damin.Models;
+using OrientalMedical.Damin.Models.DTOs;
 using OrientalMedical.Damin.Models.Entities;
 using System;
 using System.Collections.Generic;
