@@ -82,10 +82,16 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpGet("GetUsers")]
-        public IActionResult GetUsers(string userName)
+        public IActionResult GetUsers(string userName, int? page)
         {
+            int records = 10;
+            int _page = 0;
+            int total_records = 0;
+            int total_pages = 0;
+
             try
             {
+
                 List<UsuarioDTOs> usuarios = null;
 
                 if (userName != null)
@@ -94,10 +100,18 @@ namespace OrientalMedical.WebService.Controllers
                 }
                 else
                 {
-                    usuarios = _administradorServices.ObtenerUser();
+                    _page = page ?? 1;
+                    total_records = _administradorServices.ObtenerUser().Count;
+                    total_pages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(total_records / records)));
+                    
+                    usuarios = _administradorServices.ObtenerUser().Skip((_page - 1) * records).Take(records).ToList();
                 }
 
-                return Ok(usuarios);
+                return Ok(new {
+                    Pages = total_pages,
+                    Records = usuarios,
+                    currentPage = _page
+                });
             }
             catch (Exception ex)
             {
