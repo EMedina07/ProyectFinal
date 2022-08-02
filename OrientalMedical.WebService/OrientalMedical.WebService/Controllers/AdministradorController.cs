@@ -82,29 +82,31 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpGet("GetUsers")]
-        public IActionResult GetUsers(string userName, int? page)
+        public IActionResult GetUsers(string? userName, string? nombre, string? cedula, int? page)
         {
             int records = 10;
             int _page = 0;
             int total_records = 0;
             int total_pages = 0;
 
+            var allUsers = _administradorServices.ObtenerUser();
+
             try
             {
 
                 List<UsuarioDTOs> usuarios = null;
 
-                if (userName != null)
+                if (userName != null || nombre != null || cedula != null)
                 {
-                    usuarios = _administradorServices.ObtenerUser().Where(u => u.Usuario == userName).ToList();
+                    usuarios = allUsers.Where(u => u.Usuario == userName || u.Nombre == nombre || u.Cedula == cedula).ToList();
                 }
                 else
                 {
                     _page = page ?? 1;
-                    total_records = _administradorServices.ObtenerUser().Count;
+                    total_records = allUsers.Count;
                     total_pages = Convert.ToInt32(Math.Ceiling(total_records / (double) records));
                     
-                    usuarios = _administradorServices.ObtenerUser().OrderBy(u => u.Nombre).Skip((_page - 1) * records).Take(records).ToList();
+                    usuarios = allUsers.OrderBy(u => u.Nombre).Skip((_page - 1) * records).Take(records).ToList();
                 }
 
                 return Ok(new {

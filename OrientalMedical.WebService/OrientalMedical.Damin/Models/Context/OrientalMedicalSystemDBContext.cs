@@ -91,7 +91,7 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Citas>(entity =>
             {
                 entity.HasKey(e => e.CitaId)
-                    .HasName("PK__Citas__F0E2D9F27875DB1C");
+                    .HasName("PK__Citas__F0E2D9F2C121F211");
 
                 entity.HasIndex(e => new { e.EspecialidadId, e.DoctorId, e.PacienteId })
                     .HasName("UQ_Citas")
@@ -173,6 +173,11 @@ namespace OrientalMedical.Damin.Models.Context
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Asistente)
+                    .IsRequired()
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Cedula)
                     .IsRequired()
                     .HasMaxLength(11)
@@ -228,7 +233,7 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Usuarios>(entity =>
             {
                 entity.HasKey(e => e.UsuarioId)
-                    .HasName("PK__Usuarios__2B3DE79852A2B475");
+                    .HasName("PK__Usuarios__2B3DE798010E7CBE");
 
                 entity.Property(e => e.UsuarioId).HasColumnName("UsuarioID");
 

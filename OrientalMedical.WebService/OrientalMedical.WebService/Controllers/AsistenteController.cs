@@ -12,18 +12,18 @@ namespace OrientalMedical.WebService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OperadorController : ControllerBase
+    public class AsistenteController : ControllerBase
     {
         private readonly IOperadorServices _services;
         private readonly IUserServices _userServices;
 
-        public OperadorController(IOperadorServices services, IUserServices userServices)
+        public AsistenteController(IOperadorServices services, IUserServices userServices)
         {
             _services = services;
             _userServices = userServices;
         }
 
-        [HttpGet("ObtenerInformacionDelOperador")]
+        [HttpGet("ObtenerInformacionDelAsistente")]
         public IActionResult GetDoctorDetail(int operadorId)
         {
             try
@@ -38,7 +38,7 @@ namespace OrientalMedical.WebService.Controllers
             }
         }
 
-        [HttpGet("ObtenerPorDoctorID")]
+        [HttpGet("ObtenerAsistentePorDoctorID")]
         public IActionResult GetOperadorByDoctorID(int doctorID)
         {
             try
@@ -53,7 +53,7 @@ namespace OrientalMedical.WebService.Controllers
             }
         }
 
-        [HttpGet("ObtenerOperadoresParaAsignarEspecialidades")]
+        [HttpGet("ObtenerAsistentesParaAsignarAEspecialidades")]
         public IActionResult GetOperadoresForSelect(int doctorId)
         {
             try
@@ -68,7 +68,7 @@ namespace OrientalMedical.WebService.Controllers
             }
         }
 
-        [HttpPost("RegistrarOperador")]
+        [HttpPost("RegistrarAsistente")]
         public IActionResult CreateOperador(int doctorId, [FromBody] OperadorRequestDTOs operadorDTOs)
         {
             try
@@ -103,7 +103,7 @@ namespace OrientalMedical.WebService.Controllers
             }
         }
 
-        [HttpPut("ModicicarOperador")]
+        [HttpPut("ModicicarAsistente")]
         public IActionResult UpdatePropietario(int operadorId, [FromBody] OperadorRequestDTOs operadorDTOs)
         {
             try

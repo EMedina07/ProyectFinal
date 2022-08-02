@@ -55,6 +55,7 @@ namespace OrientalMedical.WebService
             services.AddScoped<IOperadorServices, OperadorServices>();
             services.AddScoped<IEspecialidadServices, EspecialidadServices>();
             services.AddScoped<IAdministradorServices, AdministradorServices>();
+            services.AddScoped<IPacienteServices, PacienteServices>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
