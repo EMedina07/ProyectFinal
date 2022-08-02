@@ -15,5 +15,6 @@ namespace OrientalMedical.Services.Interfaces
         List<OperadorForSelectModel> GetOperadoresForSelect(int doctorId);
         bool IsResgistered(string cedula);
         bool IsNewCedula(int personalId, string cedula);
+        List<OperadorResponseDTOs> GetOperadorByDoctorID(int doctorID);
     }
 }

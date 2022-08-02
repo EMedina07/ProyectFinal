@@ -38,6 +38,21 @@ namespace OrientalMedical.WebService.Controllers
             }
         }
 
+        [HttpGet("ObtenerPorDoctorID")]
+        public IActionResult GetOperadorByDoctorID(int doctorID)
+        {
+            try
+            {
+                var operador = _services.GetOperadorByDoctorID(doctorID);
+
+                return Ok(operador);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
         [HttpGet("ObtenerOperadoresParaAsignarEspecialidades")]
         public IActionResult GetOperadoresForSelect(int doctorId)
         {

@@ -25,9 +25,20 @@ namespace OrientalMedical.Services.Services
         public void CreateCredentials(string userName, string password)
         {
             Usuarios user = new Usuarios();
-            user.Usuario = userName;
+            user.Usuario = userName;        
+
+            if (this.UserAlreadyExit(userName))
+            {
+                user.Usuario = this.RestablecerUser(userName);
+            }
+            else
+            {
+                user.Usuario = userName;
+            }
+
             user.Clave = _wrapper.Password;
             user.PersonalId = _wrapper.personalRepository.GetLastId();
+            user.Estado = 0;
 
             _wrapper.UserRepository.Create(user);
             _wrapper.Save();
@@ -37,11 +48,19 @@ namespace OrientalMedical.Services.Services
         {
             int personalId = _wrapper.UserRepository.GetUserId(userName, password);
 
-            Personal personal = _wrapper.personalRepository
-                                        .GetByFilter(p => p.PersonalId == personalId)
-                                        .FirstOrDefault();
-
-            UserInformation userInformation = _mapper.Map<UserInformation>(personal);
+            UserInformation userInformation = _wrapper.UserRepository
+                                        .GetByFilter(u => u.PersonalId == personalId)
+                                        .Select(u => new UserInformation
+                                        {
+                                            PersonalId = u.Personal.PersonalId,
+                                            UserID = u.UsuarioId,
+                                            Nombre = u.Personal.Nombre,
+                                            Apellido = u.Personal.Apellido,
+                                            Cedula = u.Personal.Cedula,
+                                            Ocupacion = u.Personal.Ocupacion,
+                                            UserState = u.Estado
+                                        })
+                                        .FirstOrDefault(); 
 
             return userInformation;
         }
@@ -75,6 +94,8 @@ namespace OrientalMedical.Services.Services
                                     .FirstOrDefault();
 
             user.Clave = password;
+            user.Estado = 1;
+
             _wrapper.UserRepository.Update(user);
             _wrapper.Save();
         }
@@ -85,8 +106,61 @@ namespace OrientalMedical.Services.Services
                                    .FirstOrDefault();
 
             user.Clave = password;
+            user.Estado = 0;
+
             _wrapper.UserRepository.Update(user);
             _wrapper.Save();
+        }
+
+        public bool IsActive(int userId)
+        {
+            int state =  _wrapper.UserRepository.GetAll().Where(u => u.UsuarioId == userId).Select(u => u.Estado).FirstOrDefault();
+
+            if(state != 1)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void BloquearUser(string userName)
+        {
+            Usuarios user = _wrapper.UserRepository.GetByFilter(u => u.Usuario == userName)
+                                    .FirstOrDefault();
+
+            user.Estado = 2;
+
+            _wrapper.UserRepository.Update(user);
+            _wrapper.Save();
+        }
+
+        public bool UserAlreadyExit(string userName)
+        {
+            string userNameFound = _wrapper.UserRepository.GetByFilter(u => u.Usuario == userName)
+                                    .Select(u => u.Usuario)
+                                    .FirstOrDefault();
+
+            if (userNameFound == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private string RestablecerUser(string userName)
+        {
+            string usuario = "";
+            int pos = userName.Length - 1;
+
+            do
+            {
+                Random numRandom = new Random();
+                usuario = userName.Remove(pos, 1).Insert(pos, numRandom.Next(1, 10).ToString());
+            } while (this.UserAlreadyExit(usuario));
+
+            return usuario;
         }
     }
 }

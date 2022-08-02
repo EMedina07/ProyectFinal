@@ -37,7 +37,7 @@ namespace OrientalMedical.Core.Repositories
         public int GetUserId(string userName, string password)
         {
             return this.GetAll().Where(u => u.Usuario == userName && u.Clave == password)
-                                 .Select(u => u.PersonalId).FirstOrDefault();
+                                 .Select(u => (int)u.PersonalId).FirstOrDefault();
         }
 
         public bool IsAnUser(string userName, string password)

@@ -24,6 +24,20 @@ namespace OrientalMedical.Services.Services
             _userServices = userServices;
         }
 
+        public List<OperadorResponseDTOs> GetOperadorByDoctorID(int doctorID)
+        {
+            List<Personal> operadores = _wrapper.personalRepository.GetOperadorByDoctorID(doctorID);
+            
+            List<OperadorResponseDTOs> operadoresDTOs = new List<OperadorResponseDTOs>();
+
+            foreach (var item in operadores)
+            {
+                operadoresDTOs.Add(_mapper.Map<OperadorResponseDTOs>(item));
+            }
+
+            return operadoresDTOs;
+        }
+
         public OperadorResponseDTOs GetOperadorDetail(int operadorId)
         {
             Personal operador = _wrapper.personalRepository.GetByFilter(d => d.PersonalId == operadorId)

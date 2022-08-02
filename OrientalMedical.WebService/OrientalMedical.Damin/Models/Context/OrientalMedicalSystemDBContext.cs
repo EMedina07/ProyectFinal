@@ -16,6 +16,7 @@ namespace OrientalMedical.Damin.Models.Context
         {
         }
 
+        public virtual DbSet<Asistente> Asistente { get; set; }
         public virtual DbSet<Ausencia> Ausencia { get; set; }
         public virtual DbSet<Citas> Citas { get; set; }
         public virtual DbSet<Especialidad> Especialidad { get; set; }
@@ -33,6 +34,37 @@ namespace OrientalMedical.Damin.Models.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Asistente>(entity =>
+            {
+                entity.HasIndex(e => new { e.DoctorId, e.AsistenteId })
+                    .HasName("UQ_Doctor_AsistenteFijo")
+                    .IsUnique();
+
+                entity.Property(e => e.AsistenteId).HasColumnName("AsistenteID");
+
+                entity.Property(e => e.Apellido)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Cedula)
+                    .IsRequired()
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DoctorId).HasColumnName("DoctorID");
+
+                entity.Property(e => e.Nombre)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.Asistente)
+                    .HasForeignKey(d => d.DoctorId)
+                    .HasConstraintName("Fk_Doctor_AsistenteFijo");
+            });
+
             modelBuilder.Entity<Ausencia>(entity =>
             {
                 entity.Property(e => e.AusenciaId).HasColumnName("AusenciaID");
@@ -59,7 +91,7 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Citas>(entity =>
             {
                 entity.HasKey(e => e.CitaId)
-                    .HasName("PK__Citas__F0E2D9F25C0D8432");
+                    .HasName("PK__Citas__F0E2D9F27875DB1C");
 
                 entity.HasIndex(e => new { e.EspecialidadId, e.DoctorId, e.PacienteId })
                     .HasName("UQ_Citas")
@@ -110,6 +142,14 @@ namespace OrientalMedical.Damin.Models.Context
                     .IsRequired()
                     .HasColumnName("Especialidad")
                     .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.HoraFin)
+                    .HasMaxLength(8)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.HoraInicio)
+                    .HasMaxLength(8)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Asitente)
@@ -188,13 +228,11 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Usuarios>(entity =>
             {
                 entity.HasKey(e => e.UsuarioId)
-                    .HasName("PK__Usuarios__2B3DE798716E4C33");
-
-                entity.HasIndex(e => e.PersonalId)
-                    .HasName("UQ_Usuario_Personal")
-                    .IsUnique();
+                    .HasName("PK__Usuarios__2B3DE79852A2B475");
 
                 entity.Property(e => e.UsuarioId).HasColumnName("UsuarioID");
+
+                entity.Property(e => e.AsistenteId).HasColumnName("AsistenteID");
 
                 entity.Property(e => e.Clave)
                     .IsRequired()
@@ -208,10 +246,14 @@ namespace OrientalMedical.Damin.Models.Context
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.HasOne(d => d.Asistente)
+                    .WithMany(p => p.Usuarios)
+                    .HasForeignKey(d => d.AsistenteId)
+                    .HasConstraintName("Fk_Usuarios_Asistente");
+
                 entity.HasOne(d => d.Personal)
-                    .WithOne(p => p.Usuarios)
-                    .HasForeignKey<Usuarios>(d => d.PersonalId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .WithMany(p => p.Usuarios)
+                    .HasForeignKey(d => d.PersonalId)
                     .HasConstraintName("Fk_Usuarios_Personal");
             });
 

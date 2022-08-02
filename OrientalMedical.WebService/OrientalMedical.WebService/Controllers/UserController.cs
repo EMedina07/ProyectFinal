@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using OrientalMedical.Services.Interfaces;
 using OrientalMedical.Services.Models;
 using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
+using OrientalMedical.Shared.Utilities;
+using OrientalMedical.Shared.Utilities.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +36,11 @@ namespace OrientalMedical.WebService.Controllers
 
                 var userDetail = _userServices.GetUserDetail(user.UserName, user.Password);
 
+                if (!_userServices.IsActive(userDetail.UserID))
+                {
+                    return BadRequest("Su usuario esta "+ Enums.GetState(userDetail.UserState) +" favor contactar la administracion");
+                }
+
                 return Ok(userDetail);
             }
             catch (Exception ex)
@@ -53,6 +60,26 @@ namespace OrientalMedical.WebService.Controllers
                 }
 
                 _userServices.UpdatePassword(personalId, shangePasswordDTOs.NewPassword);
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Error del servidor");
+            }
+        }
+
+        [HttpGet("BloquearUser")]
+        public IActionResult BloquearUser(string userName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(userName))
+                {
+                    return BadRequest("El campo userName no puede ser nolo o vacio");
+                }
+
+                _userServices.BloquearUser(userName);
 
                 return NoContent();
             }

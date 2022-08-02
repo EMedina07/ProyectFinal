@@ -21,22 +21,34 @@ namespace OrientalMedical.Core.Repositories
             return this.GetAll().Max(p => p.PersonalId);
         }
 
+        public List<Personal> GetOperadorByDoctorID(int doctorID)
+        {
+            return this.GetAll().Where(p => p.DoctorId == doctorID).OrderBy(p => p.Nombre).ToList();
+        }
+
         public bool IsNewCedula(int personalId, string cedula)
         {
             string cedulaActual = this.GetAll().Where(p => p.PersonalId == personalId)
                                       .FirstOrDefault().Cedula;
 
-            if(cedulaActual != cedula)
+            if(cedulaActual == cedula)
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         public bool IsResgistered(string cedula)
         {
-            return this.GetAll().Select(p => p.Cedula).Contains(cedula);
+            int someResult = this.GetAll().Where(p => p.Cedula == cedula).ToList().Count;
+
+            if(someResult != 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

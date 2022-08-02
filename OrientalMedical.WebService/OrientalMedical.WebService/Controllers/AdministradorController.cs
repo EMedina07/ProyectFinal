@@ -102,9 +102,9 @@ namespace OrientalMedical.WebService.Controllers
                 {
                     _page = page ?? 1;
                     total_records = _administradorServices.ObtenerUser().Count;
-                    total_pages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(total_records / records)));
+                    total_pages = Convert.ToInt32(Math.Ceiling(total_records / (double) records));
                     
-                    usuarios = _administradorServices.ObtenerUser().Skip((_page - 1) * records).Take(records).ToList();
+                    usuarios = _administradorServices.ObtenerUser().OrderBy(u => u.Nombre).Skip((_page - 1) * records).Take(records).ToList();
                 }
 
                 return Ok(new {

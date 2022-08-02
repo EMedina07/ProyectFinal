@@ -15,5 +15,7 @@ namespace OrientalMedical.Services.Interfaces
         void UpdatePasswordByUserId(int userId, string password);
         bool IsCurrentPassWord(int personalId, string password);
         UserResponseDTOs GetCredentials(string cedula);
+        bool IsActive(int userId);
+        void BloquearUser(string userName);
     }
 }
