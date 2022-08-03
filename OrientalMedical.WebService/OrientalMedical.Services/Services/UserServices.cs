@@ -116,7 +116,7 @@ namespace OrientalMedical.Services.Services
         {
             int state =  _wrapper.UserRepository.GetAll().Where(u => u.UsuarioId == userId).Select(u => u.Estado).FirstOrDefault();
 
-            if(state != 1)
+            if(state > 1)
             {
                 return false;
             }
