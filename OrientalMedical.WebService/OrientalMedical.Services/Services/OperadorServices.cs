@@ -24,20 +24,6 @@ namespace OrientalMedical.Services.Services
             _userServices = userServices;
         }
 
-        public List<OperadorResponseDTOs> GetOperadorByDoctorID(int doctorID)
-        {
-            List<Personal> operadores = _wrapper.personalRepository.GetOperadorByDoctorID(doctorID);
-            
-            List<OperadorResponseDTOs> operadoresDTOs = new List<OperadorResponseDTOs>();
-
-            foreach (var item in operadores)
-            {
-                operadoresDTOs.Add(_mapper.Map<OperadorResponseDTOs>(item));
-            }
-
-            return operadoresDTOs;
-        }
-
         public OperadorResponseDTOs GetOperadorDetail(int operadorId)
         {
             Personal operador = _wrapper.personalRepository.GetByFilter(d => d.PersonalId == operadorId)
@@ -48,10 +34,10 @@ namespace OrientalMedical.Services.Services
             return operadorDTOs;
         }
 
-        public List<OperadorForSelectModel> GetOperadoresForSelect(int doctorId)
+        public List<OperadorForSelectModel> GetOperadoresForSelect()
         {
             List<OperadorForSelectModel> operadores = _wrapper.personalRepository.GetAll()
-                                                             .Where(o => o.DoctorId == doctorId)
+                                                              .Where(p => p.Ocupacion != "doctor")
                                                              .Select(o => new OperadorForSelectModel
                                                              {
                                                                  OperadorId = o.PersonalId,
@@ -71,11 +57,11 @@ namespace OrientalMedical.Services.Services
             return _wrapper.personalRepository.IsResgistered(cedula);
         }
 
-        public void RegisterOperador(int doctorId, OperadorRequestDTOs operadorDTOs)
+        public void RegisterOperador(string user, OperadorRequestDTOs operadorDTOs)
         {
             Personal operador = _mapper.Map<Personal>(operadorDTOs);
             operador.Ocupacion = _wrapper.Operador;
-            operador.DoctorId = doctorId;
+            operador.UsuarioCreador = user;
 
 
             _wrapper.personalRepository.Create(operador);
@@ -93,6 +79,7 @@ namespace OrientalMedical.Services.Services
             Personal operador = _mapper.Map<Personal>(operadorDTOs);
             operador.Ocupacion = operador.Ocupacion = _wrapper.Operador;
             operador.PersonalId = operadorId;
+            operador.UsuarioCreador = _wrapper.personalRepository.GetUserCreador(operadorId);
 
             _wrapper.personalRepository.Update(operador);
 

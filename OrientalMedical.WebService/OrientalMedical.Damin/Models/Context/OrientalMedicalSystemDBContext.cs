@@ -16,7 +16,6 @@ namespace OrientalMedical.Damin.Models.Context
         {
         }
 
-        public virtual DbSet<Asistente> Asistente { get; set; }
         public virtual DbSet<Ausencia> Ausencia { get; set; }
         public virtual DbSet<Citas> Citas { get; set; }
         public virtual DbSet<Especialidad> Especialidad { get; set; }
@@ -28,43 +27,13 @@ namespace OrientalMedical.Damin.Models.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
+
                 optionsBuilder.UseSqlServer("Server=DESKTOP-NGPA4BO\\SQLEXPRESS;Database=OrientalMedicalSystemDB;Trusted_Connection=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Asistente>(entity =>
-            {
-                entity.HasIndex(e => new { e.DoctorId, e.AsistenteId })
-                    .HasName("UQ_Doctor_AsistenteFijo")
-                    .IsUnique();
-
-                entity.Property(e => e.AsistenteId).HasColumnName("AsistenteID");
-
-                entity.Property(e => e.Apellido)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Cedula)
-                    .IsRequired()
-                    .HasMaxLength(11)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DoctorId).HasColumnName("DoctorID");
-
-                entity.Property(e => e.Nombre)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.Doctor)
-                    .WithMany(p => p.Asistente)
-                    .HasForeignKey(d => d.DoctorId)
-                    .HasConstraintName("Fk_Doctor_AsistenteFijo");
-            });
-
             modelBuilder.Entity<Ausencia>(entity =>
             {
                 entity.Property(e => e.AusenciaId).HasColumnName("AusenciaID");
@@ -91,7 +60,7 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Citas>(entity =>
             {
                 entity.HasKey(e => e.CitaId)
-                    .HasName("PK__Citas__F0E2D9F2C121F211");
+                    .HasName("PK__Citas__F0E2D9F2BF938D5E");
 
                 entity.HasIndex(e => new { e.EspecialidadId, e.DoctorId, e.PacienteId })
                     .HasName("UQ_Citas")
@@ -173,11 +142,6 @@ namespace OrientalMedical.Damin.Models.Context
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Asistente)
-                    .IsRequired()
-                    .HasMaxLength(11)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.Cedula)
                     .IsRequired()
                     .HasMaxLength(11)
@@ -192,14 +156,15 @@ namespace OrientalMedical.Damin.Models.Context
                     .IsRequired()
                     .HasMaxLength(10)
                     .IsUnicode(false);
+
+                entity.Property(e => e.UsuarioCreador)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Personal>(entity =>
             {
-                entity.HasIndex(e => new { e.DoctorId, e.PersonalId })
-                    .HasName("UQ_Doctor_Asistente")
-                    .IsUnique();
-
                 entity.Property(e => e.PersonalId).HasColumnName("PersonalID");
 
                 entity.Property(e => e.Apellido)
@@ -212,8 +177,6 @@ namespace OrientalMedical.Damin.Models.Context
                     .HasMaxLength(11)
                     .IsUnicode(false);
 
-                entity.Property(e => e.DoctorId).HasColumnName("DoctorID");
-
                 entity.Property(e => e.Nombre)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -224,20 +187,17 @@ namespace OrientalMedical.Damin.Models.Context
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.Doctor)
-                    .WithMany(p => p.InverseDoctor)
-                    .HasForeignKey(d => d.DoctorId)
-                    .HasConstraintName("Fk_Doctor_Asistente");
+                entity.Property(e => e.UsuarioCreador)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Usuarios>(entity =>
             {
                 entity.HasKey(e => e.UsuarioId)
-                    .HasName("PK__Usuarios__2B3DE798010E7CBE");
+                    .HasName("PK__Usuarios__2B3DE798455889F8");
 
                 entity.Property(e => e.UsuarioId).HasColumnName("UsuarioID");
-
-                entity.Property(e => e.AsistenteId).HasColumnName("AsistenteID");
 
                 entity.Property(e => e.Clave)
                     .IsRequired()
@@ -251,14 +211,10 @@ namespace OrientalMedical.Damin.Models.Context
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.Asistente)
-                    .WithMany(p => p.Usuarios)
-                    .HasForeignKey(d => d.AsistenteId)
-                    .HasConstraintName("Fk_Usuarios_Asistente");
-
                 entity.HasOne(d => d.Personal)
                     .WithMany(p => p.Usuarios)
                     .HasForeignKey(d => d.PersonalId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Fk_Usuarios_Personal");
             });
 

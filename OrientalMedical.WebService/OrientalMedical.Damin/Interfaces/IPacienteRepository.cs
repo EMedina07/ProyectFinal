@@ -7,5 +7,6 @@ namespace OrientalMedical.Damin.Interfaces
 {
     public interface IPacienteRepository : IRepositorioBase<Paciente>
     {
+        string GetUserCreador(int pacienteId);
     }
 }

@@ -6,13 +6,11 @@ namespace OrientalMedical.Damin.Models.Entities
     public partial class Usuarios
     {
         public int UsuarioId { get; set; }
-        public int? PersonalId { get; set; }
-        public int? AsistenteId { get; set; }
+        public int PersonalId { get; set; }
         public string Usuario { get; set; }
         public string Clave { get; set; }
         public int Estado { get; set; }
 
-        public virtual Asistente Asistente { get; set; }
         public virtual Personal Personal { get; set; }
     }
 }

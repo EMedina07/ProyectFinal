@@ -18,12 +18,14 @@ namespace OrientalMedical.WebService.Controllers
         private readonly IDoctorServices _doctorServices;
         private readonly IUserServices _userServices;
         private readonly IAdministradorServices _administradorServices;
+        private readonly IOperadorServices _services;
 
-        public AdministradorController(IDoctorServices doctorServices, IUserServices userServices, IAdministradorServices administradorServices)
+        public AdministradorController(IDoctorServices doctorServices, IUserServices userServices, IAdministradorServices administradorServices, IOperadorServices services)
         {
             _doctorServices = doctorServices;
             _userServices = userServices;
             _administradorServices = administradorServices;
+            _services = services;
         }
 
         [HttpPost("RegistrarDoctor")]
@@ -118,6 +120,41 @@ namespace OrientalMedical.WebService.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, ex);
+            }
+        }
+
+        [HttpPost("RegistrarAsistente")]
+        public IActionResult CreateOperador(string user, [FromBody] OperadorRequestDTOs operadorDTOs)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Objecto no valido");
+                }
+
+                if (!PersonalValidations.CelulaContainChar(operadorDTOs.Cedula))
+                {
+                    return BadRequest("La cedula solo debe contener numeros");
+                }
+
+                if (!PersonalValidations.CelulaLengthIsValid(operadorDTOs.Cedula))
+                {
+                    return BadRequest("La cedula solo debe contener 11 caracteres numericos");
+                }
+
+                if (_services.IsResgistered(operadorDTOs.Cedula))
+                {
+                    return BadRequest($"Ya hay un perfil registrado con este numero de cedula");
+                }
+
+                _services.RegisterOperador(user, operadorDTOs);
+
+                return Ok(_userServices.GetCredentials(operadorDTOs.Cedula));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, $"Error del servidor");
             }
         }
     }

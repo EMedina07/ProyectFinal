@@ -44,9 +44,10 @@ namespace OrientalMedical.Services.Services
             return PacientesDTOs;
         }
 
-        public void PacienteRegister(PacienteRequestDTOs pacienteDTOs)
+        public void PacienteRegister(string user, PacienteRequestDTOs pacienteDTOs)
         {
             Paciente paciente = _mapper.Map<Paciente>(pacienteDTOs);
+            paciente.UsuarioCreador = user;
 
             _wrapper.PacienteRepository.Create(paciente);
             _wrapper.Save();
@@ -56,6 +57,7 @@ namespace OrientalMedical.Services.Services
         {
             Paciente paciente = _mapper.Map<Paciente>(pacienteDTOs);
             paciente.PacienteId = pacienteId;
+            paciente.UsuarioCreador = _wrapper.PacienteRepository.GetUserCreador(pacienteId);
 
             _wrapper.PacienteRepository.Update(paciente);
             _wrapper.Save();
@@ -84,11 +86,6 @@ namespace OrientalMedical.Services.Services
             }
 
             return false;
-        }
-
-        public List<PacienteResponseDTOs> GetPacientesByAsistente(string cedula)
-        {
-            return this.GetPacientes().Where(p => p.Asistente == cedula).ToList();
         }
     }
 }

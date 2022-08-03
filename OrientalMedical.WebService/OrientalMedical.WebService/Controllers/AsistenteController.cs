@@ -38,27 +38,12 @@ namespace OrientalMedical.WebService.Controllers
             }
         }
 
-        [HttpGet("ObtenerAsistentePorDoctorID")]
-        public IActionResult GetOperadorByDoctorID(int doctorID)
-        {
-            try
-            {
-                var operador = _services.GetOperadorByDoctorID(doctorID);
-
-                return Ok(operador);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex);
-            }
-        }
-
         [HttpGet("ObtenerAsistentesParaAsignarAEspecialidades")]
-        public IActionResult GetOperadoresForSelect(int doctorId)
+        public IActionResult GetOperadoresForSelect()
         {
             try
             {
-                var operadores = _services.GetOperadoresForSelect(doctorId);
+                var operadores = _services.GetOperadoresForSelect();
 
                 return Ok(operadores);
             }
@@ -69,7 +54,7 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpPost("RegistrarAsistente")]
-        public IActionResult CreateOperador(int doctorId, [FromBody] OperadorRequestDTOs operadorDTOs)
+        public IActionResult CreateOperador(string user, [FromBody] OperadorRequestDTOs operadorDTOs)
         {
             try
             {
@@ -93,7 +78,7 @@ namespace OrientalMedical.WebService.Controllers
                     return BadRequest($"Ya hay un perfil registrado con este numero de cedula");
                 }
 
-                _services.RegisterOperador(doctorId, operadorDTOs);
+                _services.RegisterOperador(user, operadorDTOs);
 
                 return Ok(_userServices.GetCredentials(operadorDTOs.Cedula));
             }
