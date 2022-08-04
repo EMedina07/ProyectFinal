@@ -158,11 +158,5 @@ namespace OrientalMedical.WebService.Controllers
                 return StatusCode(500, $"Error del servidor");
             }
         }
-
-       /* [HttpGet("GetHoras")]
-        public IActionResult GetHoras()
-        {
-            return Ok(DateTime.Parse("13:30:34").AddMinutes(30).ToString("hh:mm:ss tt", CultureInfo.InvariantCulture));
-        }*/
     }
 }

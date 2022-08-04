@@ -41,7 +41,7 @@ namespace OrientalMedical.Services.Services
                                                              .Select(o => new OperadorForSelectModel
                                                              {
                                                                  OperadorId = o.PersonalId,
-                                                                 OperadorIdentification = o.Cedula + " - " + o.Nombre
+                                                                 OperadorIdentification = o.Cedula + " - " + o.Nombre + " " + o.Apellido
                                                              }).ToList();
 
             return operadores;

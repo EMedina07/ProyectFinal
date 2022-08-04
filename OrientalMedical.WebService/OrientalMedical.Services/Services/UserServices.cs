@@ -54,6 +54,7 @@ namespace OrientalMedical.Services.Services
                                         {
                                             PersonalId = u.Personal.PersonalId,
                                             UserID = u.UsuarioId,
+                                            UserName = u.Usuario,
                                             Nombre = u.Personal.Nombre,
                                             Apellido = u.Personal.Apellido,
                                             Cedula = u.Personal.Cedula,

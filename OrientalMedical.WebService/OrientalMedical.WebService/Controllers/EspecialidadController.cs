@@ -4,6 +4,7 @@ using OrientalMedical.Services.Interfaces;
 using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,6 +19,22 @@ namespace OrientalMedical.WebService.Controllers
         public EspecialidadController(IEspecialidadServices services)
         {
             _services = services;
+        }
+
+        [HttpGet("GetHoras")]
+        public IActionResult GetHoras()
+        {
+            int horaByDay = 12;
+            int horaInicio = 8;
+
+            List<string> horas = new List<string>();
+
+            for (int i = 0; i < horaByDay; i++)
+            {
+                horas.Add(DateTime.Parse($"{horaInicio + i}:00:00").ToString("hh:mm:ss tt", CultureInfo.InvariantCulture));
+            }
+
+            return Ok(horas);
         }
 
         [HttpGet("ObtenerEspecialidades")]
