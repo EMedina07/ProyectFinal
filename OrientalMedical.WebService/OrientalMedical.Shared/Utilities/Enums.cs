@@ -7,14 +7,16 @@ namespace OrientalMedical.Shared.Utilities
 {
     public class Enums
     {
-        public enum UserState
+        public enum CitaState
         {
-            [Description("Inactivo")]
-            Inactivo,
-            [Description("Activado")]
-            Activo,
-            [Description("Bloqueado")]
-            Bloqueado
+            [Description("Registrada")]
+            Registrada,
+            [Description("Cancelada")]
+            Cancelada,
+            [Description("Aplazada")]
+            Aplazada,
+            [Description("Atendida")]
+            Atendida,
         }
 
         public static string GetState(int state)

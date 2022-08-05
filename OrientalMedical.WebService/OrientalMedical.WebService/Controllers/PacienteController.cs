@@ -59,7 +59,7 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpPut("ModicicarPaciente")]
-        public IActionResult UpdateDoctor(int id, [FromBody] PacienteRequestDTOs pacienteDTOs)
+        public IActionResult UpdatePacientes(int id, [FromBody] PacienteRequestDTOs pacienteDTOs)
         {
             try
             {

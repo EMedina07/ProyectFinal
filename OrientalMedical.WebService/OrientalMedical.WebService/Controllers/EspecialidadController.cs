@@ -37,6 +37,21 @@ namespace OrientalMedical.WebService.Controllers
             return Ok(horas);
         }
 
+        [HttpGet("ObtenerEspecialidadPorAsistente")]
+        public IActionResult GetEsoecialidadByAsistente(int asistenteId)
+        {
+            try
+            {
+                var doctor = _services.GetEspecialidadForAsistente(asistenteId);
+
+                return Ok(doctor);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
         [HttpGet("ObtenerEspecialidades")]
         public IActionResult GetEspecialidades(int doctorId)
         {
@@ -60,6 +75,18 @@ namespace OrientalMedical.WebService.Controllers
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("Objecto no valido");
+                }
+
+                if (_services.IsRegisterd(especialidadDTOs.DoctorId, especialidadDTOs.Especialidad1))
+                {
+                    return BadRequest($"Ya tiene esta especialidad registrada");
+                }
+
+                if (!_services.AsistenIsAvailable(especialidadDTOs.AsitenteId, especialidadDTOs.HoraInicio, especialidadDTOs.HoraInicio))
+                {
+                    var horaDisponible = DateTime.Parse($"{_services.HorarioDisponible(especialidadDTOs.AsitenteId)}").ToString("hh:mm:ss tt", CultureInfo.InvariantCulture);
+
+                    return BadRequest($"Asistente no disponible favor ingresar una hora de inicio superio a {horaDisponible}");
                 }
 
                 _services.CreateEspecialidad(especialidadDTOs);

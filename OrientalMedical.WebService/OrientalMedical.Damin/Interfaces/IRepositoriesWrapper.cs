@@ -14,6 +14,7 @@ namespace OrientalMedical.Damin.Interfaces
         IEspecialidadRepository EspecialidadRepository { get; }
         IAdministradorRepository AdministradorRepository { get; }
         IPacienteRepository PacienteRepository { get; }
+        ICitasRepository CitasRepository { get; }
 
         void Save();
     }

@@ -1,4 +1,5 @@
-﻿using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
+﻿using OrientalMedical.Services.Models;
+using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
 using OrientalMedical.Shared.DataTranfereObject.ResponseDTOs;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace OrientalMedical.Services.Interfaces
         DoctorResponseDTOs GetDoctorDetail(int doctorId);
         bool IsResgistered(string cedula);
         bool IsNewCedula(int personalId, string cedula);
+        List<DoctorForSelect> GetDoctorForAsistente(int asistenteId);
     }
 }

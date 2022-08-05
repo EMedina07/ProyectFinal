@@ -38,6 +38,21 @@ namespace OrientalMedical.WebService.Controllers
             }
         }
 
+        [HttpGet("ObtenerDoctorPorAsistente")]
+        public IActionResult GetDoctorByAsistente(int asistenteId)
+        {
+            try
+            {
+                var doctor = _services.GetDoctorForAsistente(asistenteId);
+
+                return Ok(doctor);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
         [HttpPost("RegistrarDoctor")]
         public IActionResult CreateDoctor([FromBody] DoctorRequestDTOs doctorDTOs)
         {

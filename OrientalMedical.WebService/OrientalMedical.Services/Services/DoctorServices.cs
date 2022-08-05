@@ -2,6 +2,7 @@
 using OrientalMedical.Damin.Interfaces;
 using OrientalMedical.Damin.Models.Entities;
 using OrientalMedical.Services.Interfaces;
+using OrientalMedical.Services.Models;
 using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
 using OrientalMedical.Shared.DataTranfereObject.ResponseDTOs;
 using System;
@@ -30,6 +31,18 @@ namespace OrientalMedical.Services.Services
             DoctorResponseDTOs doctorDTOs = _mapper.Map<DoctorResponseDTOs>(doctor);
 
             return doctorDTOs;
+        }
+
+        public List<DoctorForSelect> GetDoctorForAsistente(int asistenteId)
+        {
+            return _wrapper.EspecialidadRepository.GetAll()
+                                              .Where(e => e.AsitenteId == asistenteId)
+                                              .Where(e => e.Doctor.Ocupacion == "doctor")
+                                              .Select(e => new DoctorForSelect
+                                              {
+                                                  DoctorId = e.DoctorId,
+                                                  Doctor = e.Doctor.Nombre + " " + e.Doctor.Apellido
+                                              }).ToList();
         }
 
         public bool IsNewCedula(int personalId, string cedula)
