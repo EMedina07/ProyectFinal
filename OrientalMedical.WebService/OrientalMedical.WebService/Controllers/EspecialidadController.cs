@@ -93,9 +93,9 @@ namespace OrientalMedical.WebService.Controllers
 
                 return Ok(new { Detail = "Registro exitoso"});
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(500, $"Error del servidor");
+                return StatusCode(500, $"Error del servidor" + ex);
             }
         }
 
