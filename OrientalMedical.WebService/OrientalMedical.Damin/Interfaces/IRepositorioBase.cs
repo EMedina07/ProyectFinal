@@ -12,6 +12,5 @@ namespace OrientalMedical.Damin.Interfaces
         IQueryable<TEntity> GetByFilter(Expression<Func<TEntity, bool>> expression);
         void Create(TEntity entity);
         void Update(TEntity entity);
-        void Delete(TEntity entity);
     }
 }

@@ -77,18 +77,6 @@ namespace OrientalMedical.WebService.Controllers
                     return BadRequest("Objecto no valido");
                 }
 
-                if (_services.IsRegisterd(especialidadDTOs.DoctorId, especialidadDTOs.Especialidad1))
-                {
-                    return BadRequest($"Ya tiene esta especialidad registrada");
-                }
-
-                if (!_services.AsistenIsAvailable(especialidadDTOs.AsitenteId, especialidadDTOs.HoraInicio, especialidadDTOs.HoraInicio))
-                {
-                    var horaDisponible = DateTime.Parse($"{_services.HorarioDisponible(especialidadDTOs.AsitenteId)}").ToString("hh:mm:ss tt", CultureInfo.InvariantCulture);
-
-                    return BadRequest($"Asistente no disponible favor ingresar una hora de inicio superio a {horaDisponible}");
-                }
-
                 _services.CreateEspecialidad(especialidadDTOs);
 
                 return Ok(new { Detail = "Registro exitoso"});

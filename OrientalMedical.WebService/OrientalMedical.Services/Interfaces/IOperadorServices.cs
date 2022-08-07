@@ -9,11 +9,12 @@ namespace OrientalMedical.Services.Interfaces
 {
     public interface IOperadorServices
     {
-        void RegisterOperador(string user, OperadorRequestDTOs operadorRequestDTOs);
+        void RegisterOperador(int doctorId, OperadorRequestDTOs operadorRequestDTOs);
         void UpdateOperador(int operadorId, OperadorRequestDTOs operadorRequestDTOs);
         OperadorResponseDTOs GetOperadorDetail(int operadorId);
-        List<OperadorForSelectModel> GetOperadoresForSelect();
         bool IsResgistered(string cedula);
         bool IsNewCedula(int personalId, string cedula);
+        List<OperadorResponseDTOs> GetOperadoresByDoctor(int doctorId);
+        void DeleteOperador(int operadorId);
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OrientalMedical.Damin.Interfaces
 {
-    public interface IPacienteRepository : IRepositorioBase<Paciente>
+    public interface ICienciasMedicasRepository : IRepositorioBase<Ciencias>
     {
     }
 }

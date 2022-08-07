@@ -29,22 +29,6 @@ namespace OrientalMedical.Services.Services
             _wrapper.Save();
         }
 
-        public List<CitasResponseDTOs> GetByAsistente(int asistenteId)
-        {
-            List<Citas> citas = _wrapper.CitasRepository.GetAll()
-                                  .Where(c => c.Especialidad.AsitenteId == asistenteId)
-                                  .ToList();
-
-            List<CitasResponseDTOs> citasResponseDTOs = new List<CitasResponseDTOs>();
-
-            foreach (var item in citas)
-            {
-                citasResponseDTOs.Add(_mapper.Map<CitasResponseDTOs>(item));
-            }
-
-            return citasResponseDTOs;
-        }
-
         public List<CitasResponseDTOs> GetByDoctor(int doctorId)
         {
             List<Citas> citas = _wrapper.CitasRepository.GetAll()

@@ -22,9 +22,38 @@ namespace OrientalMedical.WebService.Controllers
             _services = services;
         }
 
+        [HttpGet("ObtenerPaciente")]
+        public IActionResult GetPacienteDetail(int pacienteId)
+        {
+            try
+            {
+                var doctor = _services.GetPacienteDetail(pacienteId);
+
+                return Ok(doctor);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
+        [HttpDelete("EliminarPaciente")]
+        public IActionResult DeletePaciente(int pacienteId)
+        {
+            try
+            {
+                _services.DeletePaciente(pacienteId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
 
         [HttpPost("RegistrarPaciente")]
-        public IActionResult RegistrarPaciente(string user, [FromBody] PacienteRequestDTOs pacienteDTOs)
+        public IActionResult RegistrarPaciente(int asistenteId, [FromBody] PacienteRequestDTOs pacienteDTOs)
         {
             try
             {
@@ -48,7 +77,7 @@ namespace OrientalMedical.WebService.Controllers
                     return BadRequest($"Ya hay un perfil registrado con este numero de cedula");
                 }
 
-                _services.PacienteRegister(user, pacienteDTOs);
+                _services.PacienteRegister(asistenteId, pacienteDTOs);
 
                 return Ok();
             }
@@ -59,7 +88,7 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpPut("ModicicarPaciente")]
-        public IActionResult UpdatePacientes(int id, [FromBody] PacienteRequestDTOs pacienteDTOs)
+        public IActionResult UpdatePacientes(int pacienteId, [FromBody] PacienteRequestDTOs pacienteDTOs)
         {
             try
             {
@@ -73,7 +102,7 @@ namespace OrientalMedical.WebService.Controllers
                     return BadRequest("La cedula solo debe contener numeros");
                 }
 
-                if (!_services.IsNewCedula(id, pacienteDTOs.Cedula))
+                if (!_services.IsNewCedula(pacienteId, pacienteDTOs.Cedula))
                 {
                     if (_services.IsResgistered(pacienteDTOs.Cedula))
                     {
@@ -81,7 +110,7 @@ namespace OrientalMedical.WebService.Controllers
                     }
                 }
 
-                _services.UpdatePaciente(id, pacienteDTOs);
+                _services.UpdatePaciente(pacienteId, pacienteDTOs);
 
                 return NoContent();
             }
@@ -92,14 +121,14 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpGet("ObtenerPacientes")]
-        public IActionResult GetPacientes(string? nombre, string? cedula, int? page)
+        public IActionResult GetPacientes(int asistenteId, string? nombre, string? cedula, int? page)
         {
             int records = 10;
             int _page = 0;
             int total_records = 0;
             int total_pages = 0;
 
-            var allPacientes = _services.GetPacientes();
+            var allPacientes = _services.GetPacientesByAsistente(asistenteId);
 
             try
             {

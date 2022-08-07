@@ -14,7 +14,8 @@ namespace OrientalMedical.Services.CustomProfile
         public MappingProfile()
         {
             CreateMap<Personal, DoctorResponseDTOs>();
-            CreateMap<DoctorRequestDTOs, Personal>();
+            CreateMap<DoctorRequestDTOs, Personal>()
+                      .ForMember(d => d.Especialidad, s => s.Ignore());
             CreateMap<Personal, UserInformation>();
             CreateMap<Usuarios, UserResponseDTOs>();
             CreateMap<OperadorRequestDTOs, Personal>();
@@ -25,6 +26,8 @@ namespace OrientalMedical.Services.CustomProfile
             CreateMap<Paciente, PacienteResponseDTOs>();
             CreateMap<CitasRequestDTOs, Citas>();
             CreateMap<Citas, CitasResponseDTOs>();
+            CreateMap<CienciasMedicasRequestDTOs, Ciencias>();
+            CreateMap<Ciencias, CienciasMedicasResponseDTOs>();
         }
     }
 }

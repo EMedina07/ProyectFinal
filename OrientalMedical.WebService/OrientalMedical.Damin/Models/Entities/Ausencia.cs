@@ -10,6 +10,7 @@ namespace OrientalMedical.Damin.Models.Entities
         public string MotivoAusencia { get; set; }
         public DateTime? FechaInicio { get; set; }
         public DateTime? FechaReintegro { get; set; }
+        public bool IsActive { get; set; }
 
         public virtual Personal Doctor { get; set; }
     }

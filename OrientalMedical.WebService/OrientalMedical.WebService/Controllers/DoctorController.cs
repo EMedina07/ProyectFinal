@@ -16,11 +16,13 @@ namespace OrientalMedical.WebService.Controllers
     {
         private readonly IDoctorServices _services;
         private readonly IUserServices _userServices;
+        private readonly IEspecialidadServices _especialidadServices;
 
-        public DoctorController(IDoctorServices services, IUserServices userServices)
+        public DoctorController(IDoctorServices services, IUserServices userServices, IEspecialidadServices especialidadServices)
         {
             _services = services;
             _userServices = userServices;
+            _especialidadServices = especialidadServices;
         }
 
         [HttpGet("ObtenerInformacionDelDoctor")]
@@ -31,6 +33,21 @@ namespace OrientalMedical.WebService.Controllers
                 var doctor = _services.GetDoctorDetail(doctorId);
 
                 return Ok(doctor);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
+        [HttpDelete("EliminarDoctor")]
+        public IActionResult DeleteDetail(int doctorId)
+        {
+            try
+            {
+                _services.DeleteDoctor(doctorId);
+
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -84,6 +101,12 @@ namespace OrientalMedical.WebService.Controllers
                 }
 
                 _services.RegisterDoctor(doctorDTOs);
+
+                EspecialidadRequestDTOs especialidad = new EspecialidadRequestDTOs();
+                especialidad.DoctorId = _services.GetDoctorId(doctorDTOs.Cedula);
+                especialidad.CienciaId = doctorDTOs.Especialidad;
+
+                _especialidadServices.CreateEspecialidad(especialidad);
 
                 return Ok(_userServices.GetCredentials(doctorDTOs.Cedula)); 
             }

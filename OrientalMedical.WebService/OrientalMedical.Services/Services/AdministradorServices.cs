@@ -4,6 +4,7 @@ using OrientalMedical.Services.Interfaces;
 using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace OrientalMedical.Services.Services
@@ -24,11 +25,6 @@ namespace OrientalMedical.Services.Services
         public List<UsuarioDTOs> ObtenerUser()
         {
             return _wrapper.AdministradorRepository.ObtenerUser();
-        }
-
-        public void RegistrarDoctor(DoctorRequestDTOs doctorDTOs)
-        {
-            _doctorServices.RegisterDoctor(doctorDTOs);
         }
 
         public void ResetearClave(int userId, string clave)

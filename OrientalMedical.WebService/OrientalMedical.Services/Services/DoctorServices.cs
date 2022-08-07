@@ -23,9 +23,21 @@ namespace OrientalMedical.Services.Services
             _mapper = mapper;
             _userServices = userServices;
         }
+
+        public void DeleteDoctor(int doctorId)
+        {
+            Personal doctor =  _wrapper.personalRepository.GetAll().Where(d => d.PersonalId == doctorId)
+                                       .FirstOrDefault();
+
+            doctor.IsActive = false;
+
+            _wrapper.personalRepository.Update(doctor);
+            _wrapper.Save();
+        }
+
         public DoctorResponseDTOs GetDoctorDetail(int doctorId)
         {
-            Personal doctor = _wrapper.personalRepository.GetByFilter(d => d.PersonalId == doctorId)
+            Personal doctor = _wrapper.personalRepository.GetAll().Where(d => d.PersonalId == doctorId && d.IsActive != false)
                            .FirstOrDefault();
 
             DoctorResponseDTOs doctorDTOs = _mapper.Map<DoctorResponseDTOs>(doctor);
@@ -35,14 +47,24 @@ namespace OrientalMedical.Services.Services
 
         public List<DoctorForSelect> GetDoctorForAsistente(int asistenteId)
         {
+            int doctorId = (int)_wrapper.personalRepository.GetAll()
+                                   .Where(a => a.PersonalId == asistenteId)
+                                   .FirstOrDefault().DoctorId;
+
             return _wrapper.EspecialidadRepository.GetAll()
-                                              .Where(e => e.AsitenteId == asistenteId)
-                                              .Where(e => e.Doctor.Ocupacion == "doctor")
+                                              .Where(e => e.DoctorId == doctorId)
                                               .Select(e => new DoctorForSelect
                                               {
                                                   DoctorId = e.DoctorId,
                                                   Doctor = e.Doctor.Nombre + " " + e.Doctor.Apellido
                                               }).ToList();
+        }
+
+        public int GetDoctorId(string cedula)
+        {
+            return _wrapper.personalRepository.GetAll()
+                           .Where(d => d.Cedula == cedula && d.IsActive != false)
+                           .FirstOrDefault().PersonalId;
         }
 
         public bool IsNewCedula(int personalId, string cedula)
@@ -59,7 +81,7 @@ namespace OrientalMedical.Services.Services
         {
             Personal doctor = _mapper.Map<Personal>(doctorDTOs);
             doctor.Ocupacion = doctorDTOs.Ocupacion.ToLower();
-            
+            doctor.IsActive = true;
 
             _wrapper.personalRepository.Create(doctor);
             _wrapper.Save();
@@ -76,6 +98,7 @@ namespace OrientalMedical.Services.Services
             Personal doctor = _mapper.Map<Personal>(doctorDTOs);
             doctor.Ocupacion = doctorDTOs.Ocupacion.ToLower();
             doctor.PersonalId = doctorID;
+            doctor.IsActive = true;
 
             _wrapper.personalRepository.Update(doctor);
 

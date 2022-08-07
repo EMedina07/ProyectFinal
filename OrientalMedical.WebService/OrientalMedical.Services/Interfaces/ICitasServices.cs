@@ -11,6 +11,5 @@ namespace OrientalMedical.Services.Interfaces
         void CreateCitas(CitasRequestDTOs citasRequestDTOs);
         void UpdateCitas(int citaId, CitasRequestDTOs citasRequestDTOs);
         List<CitasResponseDTOs> GetByDoctor(int doctorId);
-        List<CitasResponseDTOs> GetByAsistente(int asistenteId);
     }
 }

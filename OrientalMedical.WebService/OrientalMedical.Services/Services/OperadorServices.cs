@@ -24,27 +24,42 @@ namespace OrientalMedical.Services.Services
             _userServices = userServices;
         }
 
+        public void DeleteOperador(int operadorId)
+        {
+            Personal doctor = _wrapper.personalRepository.GetAll().Where(d => d.PersonalId == operadorId)
+                                       .FirstOrDefault();
+
+            doctor.IsActive = false;
+
+            _wrapper.personalRepository.Update(doctor);
+            _wrapper.Save();
+        }
+
+        public List<OperadorResponseDTOs> GetOperadoresByDoctor(int doctorId)
+        {
+            List<Personal> operadores = _wrapper.personalRepository.GetAll()
+                                        .Where(o => o.DoctorId == doctorId && o.IsActive != false)
+                                        .ToList();
+
+            List<OperadorResponseDTOs> operadoresDTOs = new List<OperadorResponseDTOs>();
+
+            foreach (var item in operadores)
+            {
+                operadoresDTOs.Add(_mapper.Map<OperadorResponseDTOs>(item));
+            }
+
+            return operadoresDTOs;
+        }
+
         public OperadorResponseDTOs GetOperadorDetail(int operadorId)
         {
-            Personal operador = _wrapper.personalRepository.GetByFilter(d => d.PersonalId == operadorId)
+            Personal operador = _wrapper.personalRepository.GetAll()
+                                        .Where(o => o.PersonalId == operadorId && o.DoctorId != null && o.IsActive != false)
                                         .FirstOrDefault();
 
             OperadorResponseDTOs operadorDTOs = _mapper.Map<OperadorResponseDTOs>(operador);
 
             return operadorDTOs;
-        }
-
-        public List<OperadorForSelectModel> GetOperadoresForSelect()
-        {
-            List<OperadorForSelectModel> operadores = _wrapper.personalRepository.GetAll()
-                                                              .Where(p => p.Ocupacion != "doctor")
-                                                             .Select(o => new OperadorForSelectModel
-                                                             {
-                                                                 OperadorId = o.PersonalId,
-                                                                 OperadorIdentification = o.Cedula + " - " + o.Nombre + " " + o.Apellido
-                                                             }).ToList();
-
-            return operadores;
         }
 
         public bool IsNewCedula(int personalId, string cedula)
@@ -57,11 +72,12 @@ namespace OrientalMedical.Services.Services
             return _wrapper.personalRepository.IsResgistered(cedula);
         }
 
-        public void RegisterOperador(string user, OperadorRequestDTOs operadorDTOs)
+        public void RegisterOperador(int doctorId, OperadorRequestDTOs operadorDTOs)
         {
             Personal operador = _mapper.Map<Personal>(operadorDTOs);
             operador.Ocupacion = _wrapper.Operador;
-            operador.UsuarioCreador = user;
+            operador.DoctorId = doctorId;
+            operador.IsActive = true;
 
 
             _wrapper.personalRepository.Create(operador);
@@ -79,7 +95,10 @@ namespace OrientalMedical.Services.Services
             Personal operador = _mapper.Map<Personal>(operadorDTOs);
             operador.Ocupacion = operador.Ocupacion = _wrapper.Operador;
             operador.PersonalId = operadorId;
-            operador.UsuarioCreador = _wrapper.personalRepository.GetUserCreador(operadorId);
+            operador.DoctorId = _wrapper.personalRepository.GetAll()
+                                        .Where(o => o.PersonalId == operadorId)
+                                        .FirstOrDefault().DoctorId;
+            operador.IsActive = true;
 
             _wrapper.personalRepository.Update(operador);
 

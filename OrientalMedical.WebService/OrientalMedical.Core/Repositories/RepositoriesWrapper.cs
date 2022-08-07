@@ -17,6 +17,7 @@ namespace OrientalMedical.Core.Repositories
         private IAdministradorRepository _administradorRepository = null;
         private IPacienteRepository _pacienteRepository = null;
         private ICitasRepository _citasRepository = null;
+        private ICienciasMedicasRepository _cienciasMedicasRepository = null;
 
         private readonly OrientalMedicalSystemDBContext _context;
 
@@ -116,6 +117,19 @@ namespace OrientalMedical.Core.Repositories
                 }
 
                 return _citasRepository;
+            }
+        }
+
+        public ICienciasMedicasRepository CienciasMedicasRepository
+        {
+            get
+            {
+                if (_cienciasMedicasRepository == null)
+                {
+                    _cienciasMedicasRepository = new CienciasMedicasRepository(_context);
+                }
+
+                return _cienciasMedicasRepository;
             }
         }
 

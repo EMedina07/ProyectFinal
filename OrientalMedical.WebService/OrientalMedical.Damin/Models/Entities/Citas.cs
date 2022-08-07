@@ -12,6 +12,7 @@ namespace OrientalMedical.Damin.Models.Entities
         public int PacienteId { get; set; }
         public int Estado { get; set; }
         public string Comentario { get; set; }
+        public bool IsActive { get; set; }
 
         public virtual Personal Doctor { get; set; }
         public virtual Especialidad Especialidad { get; set; }

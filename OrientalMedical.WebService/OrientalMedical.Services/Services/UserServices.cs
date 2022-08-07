@@ -39,6 +39,7 @@ namespace OrientalMedical.Services.Services
             user.Clave = _wrapper.Password;
             user.PersonalId = _wrapper.personalRepository.GetLastId();
             user.Estado = 0;
+            user.IsActive = true;
 
             _wrapper.UserRepository.Create(user);
             _wrapper.Save();
@@ -162,6 +163,36 @@ namespace OrientalMedical.Services.Services
             } while (this.UserAlreadyExit(usuario));
 
             return usuario;
+        }
+
+        public void DeleteUser(int personalId)
+        {
+            Usuarios user = _wrapper.UserRepository.GetAll()
+                                    .Where(u => u.PersonalId == personalId)
+                                       .FirstOrDefault();
+
+            user.IsActive = false;
+
+            _wrapper.UserRepository.Update(user);
+            _wrapper.Save();
+        }
+
+        public bool IsDelecte(int userId)
+        {
+            Usuarios user = _wrapper.UserRepository.GetAll()
+                                    .Where(u => u.UsuarioId == userId)
+                                    .FirstOrDefault();
+
+            bool isPersonalDelete = _wrapper.personalRepository.GetAll()
+                                            .Where(p => p.PersonalId == user.PersonalId)
+                                            .FirstOrDefault().IsActive;
+
+            if(user.IsActive != true || isPersonalDelete != true)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

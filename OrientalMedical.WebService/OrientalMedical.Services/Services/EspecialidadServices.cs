@@ -22,7 +22,7 @@ namespace OrientalMedical.Services.Services
             _mapper = mapper;
         }
 
-        public bool AsistenIsAvailable(int asistenteId, string horaInicio, string horaFin)
+        /*public bool AsistenIsAvailable(int asistenteId, string horaInicio, string horaFin)
         {
             List<Especialidad> especialidades = _wrapper.EspecialidadRepository.GetAll()
                                                         .Where(e => e.AsitenteId == asistenteId)
@@ -47,11 +47,12 @@ namespace OrientalMedical.Services.Services
             }
 
             return true;
-        }
+        }*/
 
         public void CreateEspecialidad(EspecialidadRequestDTOs especialidadDTOs)
         {
             Especialidad especialidad = _mapper.Map<Especialidad>(especialidadDTOs);
+            especialidad.IsActive = true;
 
             _wrapper.EspecialidadRepository.Create(especialidad);
             _wrapper.Save();
@@ -77,40 +78,21 @@ namespace OrientalMedical.Services.Services
         {
             Especialidad especialidad = _mapper.Map<Especialidad>(especialidadDTOs);
             especialidad.EspecialidadId = especialidadId;
+            especialidad.IsActive = true;
 
             _wrapper.EspecialidadRepository.Update(especialidad);
             _wrapper.Save();
         }
 
-        public string HorarioDisponible(int asistenteId)
-        {
-            return _wrapper.EspecialidadRepository.GetAll()
-                           .Where(e => e.AsitenteId == asistenteId)
-                           .Select(e => e.HoraFin).Max();
-        }
-
-        public bool IsRegisterd(int doctorId, string especialidad)
-        {
-            int itemsCount = _wrapper.EspecialidadRepository.GetAll()
-                                     .Where(e => e.DoctorId == doctorId && e.Especialidad1 == especialidad)
-                                     .ToList().Count;
-
-            if(itemsCount == 0)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         public List<EspecialidadesForSelect> GetEspecialidadForAsistente(int asistenteId)
         {
+            int doctorId = (int)_wrapper.personalRepository.GetAll().Where(d => d.PersonalId == asistenteId)
+                                   .FirstOrDefault().DoctorId;
             return _wrapper.EspecialidadRepository.GetAll()
-                                              .Where(e => e.AsitenteId == asistenteId)
+                                              .Where(e => e.DoctorId == doctorId)
                                               .Select(e => new EspecialidadesForSelect
                                               {
                                                   EspecialidadId = e.EspecialidadId,
-                                                  Especialidad = e.Especialidad1
                                               }).ToList();
         }
     }

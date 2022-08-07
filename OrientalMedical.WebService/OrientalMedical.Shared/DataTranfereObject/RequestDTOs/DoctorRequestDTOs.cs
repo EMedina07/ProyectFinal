@@ -10,5 +10,6 @@ namespace OrientalMedical.Shared.DataTranfereObject.RequestDTOs
         public string Apellido { get; set; }
         public string Cedula { get; set; }
         public string Ocupacion { get; set; }
+        public int Especialidad { get; set; }
     }
 }

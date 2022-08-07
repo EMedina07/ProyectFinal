@@ -29,46 +29,6 @@ namespace OrientalMedical.WebService.Controllers
             _services = services;
         }
 
-        [HttpPost("RegistrarDoctor")]
-        public IActionResult CreateDoctor([FromBody] DoctorRequestDTOs doctorDTOs)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest("Objecto no valido");
-                }
-
-                if (!PersonalValidations.IsDoctor(doctorDTOs.Ocupacion))
-                {
-                    return BadRequest($"{doctorDTOs.Ocupacion} no es una ocupacion valida, en este campo debe ingresar doctor");
-                }
-
-                if (!PersonalValidations.CelulaContainChar(doctorDTOs.Cedula))
-                {
-                    return BadRequest("La cedula solo debe contener numeros");
-                }
-
-                if (!PersonalValidations.CelulaLengthIsValid(doctorDTOs.Cedula))
-                {
-                    return BadRequest("La cedula solo debe contener 11 caracteres numericos");
-                }
-
-                if (_doctorServices.IsResgistered(doctorDTOs.Cedula))
-                {
-                    return BadRequest($"Ya hay un perfil registrado con este numero de cedula");
-                }
-
-                _administradorServices.RegistrarDoctor(doctorDTOs);
-
-                return Ok(_userServices.GetCredentials(doctorDTOs.Cedula));
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, $"Error del servidor");
-            }
-        }
-
         [HttpPut("ResetearContraseña")]
         public IActionResult UpdatePassword(int userId, string clave)
         {
@@ -121,41 +81,6 @@ namespace OrientalMedical.WebService.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, ex);
-            }
-        }
-
-        [HttpPost("RegistrarAsistente")]
-        public IActionResult CreateOperador(string user, [FromBody] OperadorRequestDTOs operadorDTOs)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest("Objecto no valido");
-                }
-
-                if (!PersonalValidations.CelulaContainChar(operadorDTOs.Cedula))
-                {
-                    return BadRequest("La cedula solo debe contener numeros");
-                }
-
-                if (!PersonalValidations.CelulaLengthIsValid(operadorDTOs.Cedula))
-                {
-                    return BadRequest("La cedula solo debe contener 11 caracteres numericos");
-                }
-
-                if (_services.IsResgistered(operadorDTOs.Cedula))
-                {
-                    return BadRequest($"Ya hay un perfil registrado con este numero de cedula");
-                }
-
-                _services.RegisterOperador(user, operadorDTOs);
-
-                return Ok(_userServices.GetCredentials(operadorDTOs.Cedula));
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, $"Error del servidor");
             }
         }
     }

@@ -21,11 +21,6 @@ namespace OrientalMedical.Core.Repositories
             return this.GetAll().Max(p => p.PersonalId);
         }
 
-        public string GetUserCreador(int personalId)
-        {
-            return this.GetAll().Where(p => p.PersonalId == personalId).FirstOrDefault().UsuarioCreador;
-        }
-
         public bool IsNewCedula(int personalId, string cedula)
         {
             string cedulaActual = this.GetAll().Where(p => p.PersonalId == personalId)

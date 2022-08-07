@@ -20,7 +20,7 @@ namespace OrientalMedical.Core.Repositories
 
         public List<UsuarioDTOs> ObtenerUser()
         {
-            return this.GetAll().Select(u => new UsuarioDTOs
+            return this.GetAll().Where(u => u.Personal.IsActive != false).Select(u => new UsuarioDTOs
             {
                 UsuarioId = u.UsuarioId,
                 Usuario = u.Usuario,

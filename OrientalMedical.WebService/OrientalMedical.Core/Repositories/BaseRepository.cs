@@ -21,11 +21,6 @@ namespace OrientalMedical.Core.Repositories
             _context.Set<TEntity>().Add(entity);
         }
 
-        public void Delete(TEntity entity)
-        {
-            _context.Set<TEntity>().Remove(entity);
-        }
-
         public IQueryable<TEntity> GetAll()
         {
             return _context.Set<TEntity>().AsNoTracking();

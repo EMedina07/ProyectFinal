@@ -21,18 +21,23 @@ namespace OrientalMedical.Services.Services
             _mapper = mapper;
         }
 
-        /*public void DeletePaciente(int pacienteId)
+        public void DeletePaciente(int pacienteId)
         {
             Paciente paciente = _wrapper.PacienteRepository.GetAll().Where(p => p.PacienteId == pacienteId)
                                         .FirstOrDefault();
 
-            _wrapper.PacienteRepository.Delete(paciente);
-            _wrapper.Save();
-        }*/
+            paciente.IsActive = false;
 
-        public List<PacienteResponseDTOs> GetPacientes()
+            _wrapper.PacienteRepository.Update(paciente);
+            _wrapper.Save();
+        }
+
+        public List<PacienteResponseDTOs> GetPacientesByAsistente(int asistenteId)
         {
-            List<Paciente> pacientes = _wrapper.PacienteRepository.GetAll().ToList();
+            List<Paciente> pacientes = _wrapper.PacienteRepository.GetAll()
+                                               .Where(p => p.AsistenteId == asistenteId && p.Asistente.IsActive != false)
+                                               .Where(p => p.IsActive != false)
+                                               .ToList();
 
             List<PacienteResponseDTOs> PacientesDTOs = new List<PacienteResponseDTOs>();
 
@@ -44,10 +49,11 @@ namespace OrientalMedical.Services.Services
             return PacientesDTOs;
         }
 
-        public void PacienteRegister(string user, PacienteRequestDTOs pacienteDTOs)
+        public void PacienteRegister(int asistenteId, PacienteRequestDTOs pacienteDTOs)
         {
             Paciente paciente = _mapper.Map<Paciente>(pacienteDTOs);
-            paciente.UsuarioCreador = user;
+            paciente.AsistenteId = asistenteId;
+            paciente.IsActive = true;
 
             _wrapper.PacienteRepository.Create(paciente);
             _wrapper.Save();
@@ -57,7 +63,11 @@ namespace OrientalMedical.Services.Services
         {
             Paciente paciente = _mapper.Map<Paciente>(pacienteDTOs);
             paciente.PacienteId = pacienteId;
-            paciente.UsuarioCreador = _wrapper.PacienteRepository.GetUserCreador(pacienteId);
+            paciente.AsistenteId = _wrapper.PacienteRepository.GetAll()
+                                           .Where(p => p.PacienteId == pacienteId)
+                                           .FirstOrDefault().AsistenteId;
+            paciente.IsActive = true;
+
 
             _wrapper.PacienteRepository.Update(paciente);
             _wrapper.Save();
@@ -86,6 +96,17 @@ namespace OrientalMedical.Services.Services
             }
 
             return false;
+        }
+
+        public PacienteResponseDTOs GetPacienteDetail(int pacienteId)
+        {
+            Paciente paciente = _wrapper.PacienteRepository.GetAll()
+                                       .Where(p => p.PacienteId == pacienteId && p.IsActive != false)
+                           .FirstOrDefault();
+
+            PacienteResponseDTOs pacienteDTOs = _mapper.Map<PacienteResponseDTOs>(paciente);
+
+            return pacienteDTOs;
         }
     }
 }

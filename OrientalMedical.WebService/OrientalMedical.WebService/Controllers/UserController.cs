@@ -24,6 +24,21 @@ namespace OrientalMedical.WebService.Controllers
             _userServices = userServices;
         }
 
+        [HttpDelete("EliminarUsuario")]
+        public IActionResult DeleteUser(int userId)
+        {
+            try
+            {
+                _userServices.DeleteUser(userId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
         [HttpPost("Login")]
         public IActionResult UserAccess(User user)
         {
@@ -35,6 +50,11 @@ namespace OrientalMedical.WebService.Controllers
                 }
 
                 var userDetail = _userServices.GetUserDetail(user.UserName, user.Password);
+
+                if (_userServices.IsDelecte(userDetail.UserID))
+                {
+                    return BadRequest("Acceso no permitido, favor contactar al administrador");
+                }
 
                 if (!_userServices.IsActive(userDetail.UserID))
                 {

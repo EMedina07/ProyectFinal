@@ -8,7 +8,6 @@ namespace OrientalMedical.Services.Interfaces
 {
     public interface IAdministradorServices
     {
-        void RegistrarDoctor(DoctorRequestDTOs doctorDTOs);
         List<UsuarioDTOs> ObtenerUser();
         void ResetearClave(int personalId, string clave);
     }

@@ -15,8 +15,10 @@ namespace OrientalMedical.Damin.Models.Entities
         public string Apellido { get; set; }
         public string Cedula { get; set; }
         public string Telefono { get; set; }
-        public string UsuarioCreador { get; set; }
+        public int AsistenteId { get; set; }
+        public bool IsActive { get; set; }
 
+        public virtual Personal Asistente { get; set; }
         public virtual ICollection<Citas> Citas { get; set; }
     }
 }

@@ -12,9 +12,6 @@ namespace OrientalMedical.Services.Interfaces
         void CreateEspecialidad(EspecialidadRequestDTOs especialidadDTOs);
         void UpdateEspecialidad(int especialidadId, EspecialidadRequestDTOs especialidadDTOs);
         List<EspecialidadResponseDTOs> GetEspecialidades(int doctorId);
-        bool AsistenIsAvailable(int asistenteId, string horaInicio, string horaFin);
-        string HorarioDisponible(int asistenteId);
-        bool IsRegisterd(int doctorId, string especialidad);
         List<EspecialidadesForSelect> GetEspecialidadForAsistente(int asistenteId);
     }
 }

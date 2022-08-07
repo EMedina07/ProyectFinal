@@ -8,10 +8,11 @@ namespace OrientalMedical.Services.Interfaces
 {
     public interface IPacienteServices
     {
-        void PacienteRegister(string user, PacienteRequestDTOs pacienteDTOs);
+        void PacienteRegister(int asistenteId, PacienteRequestDTOs pacienteDTOs);
         void UpdatePaciente(int pacienteId, PacienteRequestDTOs pacienteDTOs);
-        //void DeletePaciente(int pacienteId);
-        List<PacienteResponseDTOs> GetPacientes();
+        void DeletePaciente(int pacienteId);
+        List<PacienteResponseDTOs> GetPacientesByAsistente(int asistenteId);
+        PacienteResponseDTOs GetPacienteDetail(int pacienteId);
         bool IsResgistered(string cedula);
         bool IsNewCedula(int id, string cedula);
     }
