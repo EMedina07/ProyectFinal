@@ -28,6 +28,13 @@ namespace OrientalMedical.Services.CustomProfile
             CreateMap<Citas, CitasResponseDTOs>();
             CreateMap<CienciasMedicasRequestDTOs, Ciencias>();
             CreateMap<Ciencias, CienciasMedicasResponseDTOs>();
+            CreateMap<HorarioRequestDTOs, Horario>();
+            CreateMap<Horario, HorarioResponseDTOs>();
+            CreateMap<DiasLaborables, HorarioTrabajoResponseDTOs>()
+                .ForMember(d => d.HoraInicio, s => s.Ignore())
+                .ForMember(d => d.HoraFin, s => s.Ignore())
+                .ForMember(d => d.MinutosPorPaciente, s => s.Ignore());
+
         }
     }
 }

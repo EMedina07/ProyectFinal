@@ -4,6 +4,7 @@ using OrientalMedical.Services.Interfaces;
 using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,9 +46,9 @@ namespace OrientalMedical.WebService.Controllers
                     return BadRequest("Objecto no valido");
                 }
 
-                _services.CreateCitas(citasRequestDTOs);
+               _services.CreateCitas(citasRequestDTOs);
 
-                return Ok(new { Detail = "Registro exitoso" });
+                return Ok();
             }
             catch (Exception)
             {

@@ -21,22 +21,6 @@ namespace OrientalMedical.WebService.Controllers
             _services = services;
         }
 
-        /*[HttpGet("GetHoras")]
-        public IActionResult GetHoras()
-        {
-            int horaByDay = 12;
-            int horaInicio = 8;
-
-            List<string> horas = new List<string>();
-
-            for (int i = 0; i < horaByDay; i++)
-            {
-                horas.Add(DateTime.Parse($"{horaInicio + i}:00:00").ToString("hh:mm:ss tt", CultureInfo.InvariantCulture));
-            }
-
-            return Ok(horas);
-        }*/
-
         [HttpGet("ObtenerEspecialidad")]
         public IActionResult GetEsoecialidadByAsistente(int especialidadId)
         {

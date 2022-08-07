@@ -58,6 +58,8 @@ namespace OrientalMedical.WebService
             services.AddScoped<IPacienteServices, PacienteServices>();
             services.AddScoped<ICitasServices, CitasServices>();
             services.AddScoped<ICienciasMedicasServices, CienciasMedicasServices>();
+            services.AddScoped<IHorarioServices, HorarioServices>();
+            services.AddScoped<IHorarioTrabajoServices, HorarioTrabajoServices>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

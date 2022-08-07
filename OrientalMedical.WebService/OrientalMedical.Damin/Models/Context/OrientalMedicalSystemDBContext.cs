@@ -19,7 +19,9 @@ namespace OrientalMedical.Damin.Models.Context
         public virtual DbSet<Ausencia> Ausencia { get; set; }
         public virtual DbSet<Ciencias> Ciencias { get; set; }
         public virtual DbSet<Citas> Citas { get; set; }
+        public virtual DbSet<DiasLaborables> DiasLaborables { get; set; }
         public virtual DbSet<Especialidad> Especialidad { get; set; }
+        public virtual DbSet<Horario> Horario { get; set; }
         public virtual DbSet<Paciente> Paciente { get; set; }
         public virtual DbSet<Personal> Personal { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
@@ -60,7 +62,7 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Ciencias>(entity =>
             {
                 entity.HasKey(e => e.CienciaId)
-                    .HasName("PK__Ciencias__9A66C7136400EB98");
+                    .HasName("PK__Ciencias__9A66C7137E4CB924");
 
                 entity.Property(e => e.Ciencia)
                     .IsRequired()
@@ -71,7 +73,7 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Citas>(entity =>
             {
                 entity.HasKey(e => e.CitaId)
-                    .HasName("PK__Citas__F0E2D9F282D81DBF");
+                    .HasName("PK__Citas__F0E2D9F20C965CAB");
 
                 entity.HasIndex(e => new { e.EspecialidadId, e.DoctorId, e.PacienteId })
                     .HasName("UQ_Citas")
@@ -108,6 +110,15 @@ namespace OrientalMedical.Damin.Models.Context
                     .HasConstraintName("Fk_Cita_Paciente");
             });
 
+            modelBuilder.Entity<DiasLaborables>(entity =>
+            {
+                entity.HasOne(d => d.Horario)
+                    .WithMany(p => p.DiasLaborables)
+                    .HasForeignKey(d => d.HorarioId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Fk_DiasLaborables_Horario");
+            });
+
             modelBuilder.Entity<Especialidad>(entity =>
             {
                 entity.Property(e => e.DoctorId).HasColumnName("DoctorID");
@@ -123,6 +134,30 @@ namespace OrientalMedical.Damin.Models.Context
                     .HasForeignKey(d => d.DoctorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Fk_Especialidad_Doctor");
+            });
+
+            modelBuilder.Entity<Horario>(entity =>
+            {
+                entity.Property(e => e.HoraFin)
+                    .IsRequired()
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.HoraInicio)
+                    .IsRequired()
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MinutosPorPaciente)
+                    .IsRequired()
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Doctor)
+                    .WithMany(p => p.Horario)
+                    .HasForeignKey(d => d.DoctorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Fk_Horario_Doctor");
             });
 
             modelBuilder.Entity<Paciente>(entity =>
@@ -195,7 +230,7 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Usuarios>(entity =>
             {
                 entity.HasKey(e => e.UsuarioId)
-                    .HasName("PK__Usuarios__2B3DE798C9BAB62A");
+                    .HasName("PK__Usuarios__2B3DE798DB54C6B6");
 
                 entity.Property(e => e.UsuarioId).HasColumnName("UsuarioID");
 

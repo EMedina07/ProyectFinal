@@ -21,8 +21,6 @@ namespace OrientalMedical.WebService.Controllers
             _services = services;
         }
 
-        
-
         [HttpGet("ObtenerCienciasMedica")]
         public IActionResult GetCienciasMedicaDetail(int cienciasMedicaId)
         {
