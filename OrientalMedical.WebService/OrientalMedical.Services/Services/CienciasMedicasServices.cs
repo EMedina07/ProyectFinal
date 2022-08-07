@@ -23,6 +23,7 @@ namespace OrientalMedical.Services.Services
         public bool CienciaMedicaIsRegistrated(string cienciaMedica)
         {
             int cienciasMedicaCount = _wrapper.CienciasMedicasRepository.GetAll()
+                                      .Where(c => c.IsActive != false)
                                       .Where(c => c.Ciencia == cienciaMedica)
                                       .Count();
 

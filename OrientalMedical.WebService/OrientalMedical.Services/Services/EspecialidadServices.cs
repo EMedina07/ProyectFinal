@@ -58,20 +58,57 @@ namespace OrientalMedical.Services.Services
             _wrapper.Save();
         }
 
-        public List<EspecialidadResponseDTOs> GetEspecialidades(int doctorId)
+        public void DeleteEspecialidad(int especialidadId)
         {
-            List<Especialidad> especialidades = _wrapper.EspecialidadRepository.GetAll()
-                                                        .Where(e => e.DoctorId == doctorId)
-                                                        .ToList();
+            Especialidad especialidad = _wrapper.EspecialidadRepository.GetAll()
+                                                .Where(e => e.IsActive != false)
+                                                .Where(e => e.EspecialidadId == especialidadId)
+                                                .FirstOrDefault();
 
-            List<EspecialidadResponseDTOs> especialidadDTOs = new List<EspecialidadResponseDTOs>();
+            especialidad.IsActive = false;
 
-            foreach (var especialidad in especialidades)
-            {
-                especialidadDTOs.Add(_mapper.Map<EspecialidadResponseDTOs>(especialidad));
-            }
+            _wrapper.EspecialidadRepository.Update(especialidad);
+            _wrapper.Save();
+        }
+
+        public EspecialidadResponseDTOs GetEspecialidadDetail(int especialidadId)
+        {
+            Especialidad especialidad = _wrapper.EspecialidadRepository.GetAll()
+                                                .Where(e => e.IsActive != false)
+                                                .Where(e => e.EspecialidadId == especialidadId)
+                                                .FirstOrDefault();
+
+            EspecialidadResponseDTOs especialidadDTOs = _mapper.Map<EspecialidadResponseDTOs>(especialidad);
 
             return especialidadDTOs;
+        }
+
+        public List<EspecialidadesForSelect> GetEspecialidades(int doctorId)
+        {
+            return  _wrapper.EspecialidadRepository.GetAll()
+                            .Where(e => e.DoctorId == doctorId)
+                            .Where(e => e.IsActive != false)
+                            .Select(e => new EspecialidadesForSelect
+                            {
+                                EspecialidadId = e.EspecialidadId,
+                                Especialidad = e.Ciencia.Ciencia
+                            })
+                            .ToList();
+        }
+
+        public bool IsRegistared(int doctorId, int cienciaMedicaId)
+        {
+            int results = _wrapper.EspecialidadRepository.GetAll()
+                            .Where(e => e.IsActive != false)
+                            .Where(e => e.DoctorId == doctorId && e.CienciaId == cienciaMedicaId)
+                            .ToList().Count;
+
+            if(results != 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void UpdateEspecialidad(int especialidadId, EspecialidadRequestDTOs especialidadDTOs)
@@ -82,18 +119,6 @@ namespace OrientalMedical.Services.Services
 
             _wrapper.EspecialidadRepository.Update(especialidad);
             _wrapper.Save();
-        }
-
-        public List<EspecialidadesForSelect> GetEspecialidadForAsistente(int asistenteId)
-        {
-            int doctorId = (int)_wrapper.personalRepository.GetAll().Where(d => d.PersonalId == asistenteId)
-                                   .FirstOrDefault().DoctorId;
-            return _wrapper.EspecialidadRepository.GetAll()
-                                              .Where(e => e.DoctorId == doctorId)
-                                              .Select(e => new EspecialidadesForSelect
-                                              {
-                                                  EspecialidadId = e.EspecialidadId,
-                                              }).ToList();
         }
     }
 }

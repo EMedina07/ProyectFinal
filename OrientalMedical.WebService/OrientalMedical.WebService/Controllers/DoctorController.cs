@@ -106,6 +106,11 @@ namespace OrientalMedical.WebService.Controllers
                 especialidad.DoctorId = _services.GetDoctorId(doctorDTOs.Cedula);
                 especialidad.CienciaId = doctorDTOs.Especialidad;
 
+                if (_especialidadServices.IsRegistared(especialidad.DoctorId, especialidad.CienciaId))
+                {
+                    return BadRequest($"Ya cuenta con esta especialidad");
+                }
+
                 _especialidadServices.CreateEspecialidad(especialidad);
 
                 return Ok(_userServices.GetCredentials(doctorDTOs.Cedula)); 

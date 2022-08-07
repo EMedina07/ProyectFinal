@@ -21,7 +21,7 @@ namespace OrientalMedical.WebService.Controllers
             _services = services;
         }
 
-        [HttpGet("GetHoras")]
+        /*[HttpGet("GetHoras")]
         public IActionResult GetHoras()
         {
             int horaByDay = 12;
@@ -35,14 +35,14 @@ namespace OrientalMedical.WebService.Controllers
             }
 
             return Ok(horas);
-        }
+        }*/
 
-        [HttpGet("ObtenerEspecialidadPorAsistente")]
-        public IActionResult GetEsoecialidadByAsistente(int asistenteId)
+        [HttpGet("ObtenerEspecialidad")]
+        public IActionResult GetEsoecialidadByAsistente(int especialidadId)
         {
             try
             {
-                var doctor = _services.GetEspecialidadForAsistente(asistenteId);
+                var doctor = _services.GetEspecialidadDetail(especialidadId);
 
                 return Ok(doctor);
             }
@@ -52,7 +52,22 @@ namespace OrientalMedical.WebService.Controllers
             }
         }
 
-        [HttpGet("ObtenerEspecialidades")]
+        [HttpDelete("EliminarEspecialidad")]
+        public IActionResult DeleteEspecialidad(int especialidadId)
+        {
+            try
+            {
+                _services.DeleteEspecialidad(especialidadId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
+        [HttpGet("ObtenerEspecialidadesPorDoctor")]
         public IActionResult GetEspecialidades(int doctorId)
         {
             try
@@ -75,6 +90,11 @@ namespace OrientalMedical.WebService.Controllers
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("Objecto no valido");
+                }
+
+                if (_services.IsRegistared(especialidadDTOs.DoctorId, especialidadDTOs.CienciaId))
+                {
+                    return BadRequest($"Ya cuenta con esta especialidad");
                 }
 
                 _services.CreateEspecialidad(especialidadDTOs);

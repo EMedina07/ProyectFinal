@@ -8,6 +8,5 @@ namespace OrientalMedical.Shared.DataTranfereObject.RequestDTOs
     {
         public int DoctorId { get; set; }
         public int CienciaId { get; set; }
-        public bool IsActive { get; set; }
     }
 }
