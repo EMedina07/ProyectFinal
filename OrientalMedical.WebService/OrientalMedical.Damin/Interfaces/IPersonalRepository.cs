@@ -10,5 +10,6 @@ namespace OrientalMedical.Damin.Interfaces
         int GetLastId();
         bool IsResgistered(string cedula);
         bool IsNewCedula(int personalId, string cedula);
+        int GetDoctorIdByAsistente(int asistenteId);
     }
 }

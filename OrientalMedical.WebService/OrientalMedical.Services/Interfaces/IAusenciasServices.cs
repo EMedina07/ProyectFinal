@@ -8,7 +8,7 @@ namespace OrientalMedical.Services.Interfaces
 {
     public interface IAusenciasServices
     {
-        void RegistrarAusencia(AucenciasRequestDTOs aucenciasRequestDTOs);
+        void RegistrarAusencia(int asistenteId, AucenciasRequestDTOs aucenciasRequestDTOs);
         void UpdateAusencia(int ausenciaId, AucenciasRequestDTOs aucenciasRequestDTOs);
         void DeleteAusencia(int ausenciaId);
         List<AusenciaResponseDTOs> GetAusenciasByAsistente(int asistenteId);

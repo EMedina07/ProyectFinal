@@ -66,7 +66,7 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpPost("RegistrarAusencia")]
-        public IActionResult RegistrarAusencia(AucenciasRequestDTOs aucenciasRequestDTOs)
+        public IActionResult RegistrarAusencia(int asistenteId, AucenciasRequestDTOs aucenciasRequestDTOs)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace OrientalMedical.WebService.Controllers
                     return BadRequest("La ausencia ya se encuentra registrada");
                 }
 
-                _services.RegistrarAusencia(aucenciasRequestDTOs);
+                _services.RegistrarAusencia(asistenteId, aucenciasRequestDTOs);
 
                 return Ok(new { Detail = "Registro exitoso" });
             }

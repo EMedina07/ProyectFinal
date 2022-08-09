@@ -98,9 +98,10 @@ namespace OrientalMedical.Services.Services
             return false;
         }
 
-        public void RegistrarAusencia(AucenciasRequestDTOs aucenciasRequestDTOs)
+        public void RegistrarAusencia(int asistenteId, AucenciasRequestDTOs aucenciasRequestDTOs)
         {
             Ausencia ausencia = _mapper.Map<Ausencia>(aucenciasRequestDTOs);
+            ausencia.DoctorId = _wrapper.personalRepository.GetDoctorIdByAsistente(asistenteId);
             ausencia.IsActive = true;
 
             _wrapper.AucenciasRepository.Create(ausencia);
@@ -110,6 +111,8 @@ namespace OrientalMedical.Services.Services
         public void UpdateAusencia(int ausenciaId, AucenciasRequestDTOs aucenciasRequestDTOs)
         {
             Ausencia ausencia = _mapper.Map<Ausencia>(aucenciasRequestDTOs);
+            ausencia.DoctorId = _wrapper.AucenciasRepository.GetAll().Where(a => a.AusenciaId == ausenciaId)
+                                                          .FirstOrDefault().DoctorId;
             ausencia.AusenciaId = ausenciaId;
             ausencia.IsActive = true;
 

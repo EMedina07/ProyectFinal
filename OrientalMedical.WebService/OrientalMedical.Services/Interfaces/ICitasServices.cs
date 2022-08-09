@@ -9,7 +9,7 @@ namespace OrientalMedical.Services.Interfaces
 {
     public interface ICitasServices
     {
-        void CreateCitas(CitasRequestDTOs citasRequestDTOs);
+        void CreateCitas(int asistenteId, CitasRequestDTOs citasRequestDTOs);
         void UpdateCitas(int citaId, CitasRequestDTOs citasRequestDTOs);
         CitasResponseDTOs GetCitaDetail(int citaId);
         List<CitasResponseDTOs> GetByDoctor(int doctorId);

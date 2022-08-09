@@ -22,9 +22,10 @@ namespace OrientalMedical.Services.Services
             _mapper = mapper;
         }
 
-        public void CreateCitas(CitasRequestDTOs citasRequestDTOs)
+        public void CreateCitas(int asistenteId, CitasRequestDTOs citasRequestDTOs)
         {
             Citas cita = _mapper.Map<Citas>(citasRequestDTOs);
+            cita.DoctorId = _wrapper.personalRepository.GetDoctorIdByAsistente(asistenteId);
             cita.Estado = 0;
             cita.IsActive = true;
 
@@ -34,9 +35,7 @@ namespace OrientalMedical.Services.Services
 
         public List<CitaModel> GetByAsistente(int asistenteId, DateTime? fechaInicio, DateTime? fechaFin, int? status)
         {
-            int doctorId = (int)_wrapper.personalRepository.GetAll()
-                                   .Where(a => a.PersonalId == asistenteId)
-                                   .FirstOrDefault().DoctorId;
+            int doctorId = (int)_wrapper.personalRepository.GetDoctorIdByAsistente(asistenteId);
 
             List<CitaModel> citas = _wrapper.CitasRepository.GetAll()
                                   .Where(c => c.IsActive != false && c.DoctorId == doctorId)
@@ -120,6 +119,8 @@ namespace OrientalMedical.Services.Services
             
             Citas cita = _mapper.Map<Citas>(citasRequestDTOs);
             cita.CitaId = citaId;
+            cita.DoctorId = this.GetCitaDetail(citaId).DoctorId;
+            cita.IsActive = true;
             cita.Estado = citaCurrent.Estado;
             cita.Comentario = cita.Comentario;
 

@@ -69,7 +69,7 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpPost("RegistrarCitas")]
-        public IActionResult CreateCitas([FromBody] CitasRequestDTOs citasRequestDTOs)
+        public IActionResult CreateCitas(int asistenteId, [FromBody] CitasRequestDTOs citasRequestDTOs)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace OrientalMedical.WebService.Controllers
                     return BadRequest("Objecto no valido");
                 }
 
-               _services.CreateCitas(citasRequestDTOs);
+               _services.CreateCitas(asistenteId, citasRequestDTOs);
 
                 return Ok();
             }

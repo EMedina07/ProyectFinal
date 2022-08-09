@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OrientalMedical.Damin.Models.DTOs;
 using OrientalMedical.Services.Interfaces;
+using OrientalMedical.Services.Models;
 using OrientalMedical.Services.Validations;
 using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
 using System;
@@ -30,11 +31,11 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpPut("ResetearContraseña")]
-        public IActionResult UpdatePassword(int userId, string clave)
+        public IActionResult UpdatePassword([FromBody] ResetModel user)
         {
             try
             {
-                _administradorServices.ResetearClave(userId, clave);
+                _administradorServices.ResetearClave(user.UserId, user.Password);
 
                 return NoContent();
             }

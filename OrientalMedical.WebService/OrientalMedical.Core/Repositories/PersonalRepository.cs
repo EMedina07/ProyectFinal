@@ -16,6 +16,12 @@ namespace OrientalMedical.Core.Repositories
             _context = context;
         }
 
+        public int GetDoctorIdByAsistente(int asistenteId)
+        {
+            return (int) this.GetAll().Where(a => a.PersonalId == asistenteId)
+                                .FirstOrDefault().DoctorId;
+        }
+
         public int GetLastId()
         {
             return this.GetAll().Max(p => p.PersonalId);
