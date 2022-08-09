@@ -43,7 +43,7 @@ namespace OrientalMedical.Services.Services
             _wrapper.Save();
         }
 
-        public HorarioTrabajoResponseDTOs GetHorarioByDoctor(int doctorId)
+        public List<HorarioTrabajoResponseDTOs> GetHorarioByDoctor(int doctorId)
         {
             return _wrapper.HorarioRepository.GetAll()
                                       .Where(h => h.IsActive != false && h.DoctorId == doctorId)
@@ -60,7 +60,7 @@ namespace OrientalMedical.Services.Services
                                           Jueves = h.DiasLaborables.FirstOrDefault().Jueves,
                                           Viernes = h.DiasLaborables.FirstOrDefault().Viernes,
                                           Sabado = h.DiasLaborables.FirstOrDefault().Sabado
-                                      }).FirstOrDefault();
+                                      }).ToList();
         }
 
         public HorarioTrabajoResponseDTOs GetHorarioDetail(int horarioId)

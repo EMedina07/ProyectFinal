@@ -76,9 +76,9 @@ namespace OrientalMedical.WebService.Controllers
         {
             try
             {
-                var horario = _services.GetHorarioByDoctor(doctorId);
+                var horarios = _services.GetHorarioByDoctor(doctorId);
 
-                return Ok(horario);
+                return Ok(horarios);
             }
             catch (Exception ex)
             {

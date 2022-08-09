@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace OrientalMedical.Damin.Models.Entities
+namespace OrientalMedical.Shared.DataTranfereObject.RequestDTOs
 {
-    public partial class Ausencia
+    public class AucenciasRequestDTOs
     {
-        public int AusenciaId { get; set; }
         public int DoctorId { get; set; }
         public string MotivoAusencia { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaReintegro { get; set; }
-        public bool IsActive { get; set; }
-
-        public virtual Personal Doctor { get; set; }
     }
 }

@@ -160,5 +160,46 @@ namespace OrientalMedical.WebService.Controllers
                 return StatusCode(500, ex);
             }
         }
+
+        [HttpGet("ObtenerTodosLosPacientes")]
+        public IActionResult GetAllPacientes(string? nombre, string? cedula, int? page)
+        {
+            int records = 10;
+            int _page = 0;
+            int total_records = 0;
+            int total_pages = 0;
+
+            var allPacientes = _services.GetAllPacientes();
+
+            try
+            {
+
+                List<PacienteResponseDTOs> pacientes = null;
+
+                if (nombre != null || cedula != null)
+                {
+                    pacientes = allPacientes.Where(p => p.Nombre == nombre || p.Cedula == cedula).ToList();
+                }
+                else
+                {
+                    _page = page ?? 1;
+                    total_records = allPacientes.Count;
+                    total_pages = Convert.ToInt32(Math.Ceiling(total_records / (double)records));
+
+                    pacientes = allPacientes.OrderBy(p => p.Nombre).Skip((_page - 1) * records).Take(records).ToList();
+                }
+
+                return Ok(new
+                {
+                    Pages = total_pages,
+                    Records = pacientes,
+                    currentPage = _page
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
     }
 }

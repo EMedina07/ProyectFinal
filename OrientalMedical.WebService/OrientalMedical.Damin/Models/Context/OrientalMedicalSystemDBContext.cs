@@ -30,6 +30,7 @@ namespace OrientalMedical.Damin.Models.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Server=DESKTOP-NGPA4BO\\SQLEXPRESS;Database=OrientalMedicalSystemDB;Trusted_Connection=True;");
             }
         }
@@ -49,6 +50,7 @@ namespace OrientalMedical.Damin.Models.Context
                 entity.Property(e => e.FechaReintegro).HasColumnType("datetime");
 
                 entity.Property(e => e.MotivoAusencia)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -62,7 +64,7 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Ciencias>(entity =>
             {
                 entity.HasKey(e => e.CienciaId)
-                    .HasName("PK__Ciencias__9A66C7137E4CB924");
+                    .HasName("PK__Ciencias__9A66C71357A7CDA7");
 
                 entity.Property(e => e.Ciencia)
                     .IsRequired()
@@ -73,7 +75,7 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Citas>(entity =>
             {
                 entity.HasKey(e => e.CitaId)
-                    .HasName("PK__Citas__F0E2D9F20C965CAB");
+                    .HasName("PK__Citas__F0E2D9F2585DAC85");
 
                 entity.HasIndex(e => new { e.EspecialidadId, e.DoctorId, e.PacienteId })
                     .HasName("UQ_Citas")
@@ -230,7 +232,7 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Usuarios>(entity =>
             {
                 entity.HasKey(e => e.UsuarioId)
-                    .HasName("PK__Usuarios__2B3DE798DB54C6B6");
+                    .HasName("PK__Usuarios__2B3DE79841A51071");
 
                 entity.Property(e => e.UsuarioId).HasColumnName("UsuarioID");
 

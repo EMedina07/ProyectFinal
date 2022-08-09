@@ -11,7 +11,7 @@ namespace OrientalMedical.Services.Interfaces
         void CreateHorario(int doctorId, HorarioRequestDTOs horarioRequestDTOs);
         void UpdateHorario(int horarioId, HorarioRequestDTOs horarioRequestDTOs);
         HorarioTrabajoResponseDTOs GetHorarioDetail(int horarioId);
-        HorarioTrabajoResponseDTOs GetHorarioByDoctor(int doctorId);
+        List<HorarioTrabajoResponseDTOs> GetHorarioByDoctor(int doctorId);
         void DeleteHorario(int horarioId);
         bool HaveHorarioRegistrated(int doctorId);
     }

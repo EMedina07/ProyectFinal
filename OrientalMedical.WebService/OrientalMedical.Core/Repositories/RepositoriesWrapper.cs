@@ -20,6 +20,7 @@ namespace OrientalMedical.Core.Repositories
         private ICienciasMedicasRepository _cienciasMedicasRepository = null;
         private IHorarioRepository _horarioRepository = null;
         private IDiasLaborablesRepository _diasLaborablesRepository = null;
+        private IAucenciasRepository _aucenciasRepository = null;
 
         private readonly OrientalMedicalSystemDBContext _context;
 
@@ -158,6 +159,19 @@ namespace OrientalMedical.Core.Repositories
                 }
 
                 return _diasLaborablesRepository;
+            }
+        }
+
+        public IAucenciasRepository AucenciasRepository
+        {
+            get
+            {
+                if (_aucenciasRepository == null)
+                {
+                    _aucenciasRepository = new AucenciasRepository(_context);
+                }
+
+                return _aucenciasRepository;
             }
         }
 

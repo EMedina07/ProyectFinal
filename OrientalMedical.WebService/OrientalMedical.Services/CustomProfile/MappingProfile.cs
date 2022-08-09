@@ -34,7 +34,8 @@ namespace OrientalMedical.Services.CustomProfile
                 .ForMember(d => d.HoraInicio, s => s.Ignore())
                 .ForMember(d => d.HoraFin, s => s.Ignore())
                 .ForMember(d => d.MinutosPorPaciente, s => s.Ignore());
-
+            CreateMap<AucenciasRequestDTOs, Ausencia>();
+            CreateMap<Ausencia, AusenciaResponseDTOs>();
         }
     }
 }

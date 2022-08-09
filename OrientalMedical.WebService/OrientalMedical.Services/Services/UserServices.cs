@@ -187,7 +187,16 @@ namespace OrientalMedical.Services.Services
                                             .Where(p => p.PersonalId == user.PersonalId)
                                             .FirstOrDefault().IsActive;
 
-            if(user.IsActive != true || isPersonalDelete != true)
+            int doctorId = (int)_wrapper.personalRepository.GetAll()
+                                           .Where(o => o.DoctorId != null)
+                                           .FirstOrDefault().DoctorId;
+
+            bool doctorIsActive = _wrapper.personalRepository.GetAll()
+                                            .Where(o => o.PersonalId == doctorId)
+                                            .FirstOrDefault().IsActive;
+
+
+            if (user.IsActive != true || isPersonalDelete != true || doctorIsActive != true)
             {
                 return true;
             }

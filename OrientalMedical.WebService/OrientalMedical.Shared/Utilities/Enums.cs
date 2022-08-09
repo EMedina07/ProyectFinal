@@ -11,12 +11,14 @@ namespace OrientalMedical.Shared.Utilities
         {
             [Description("Registrada")]
             Registrada,
+            [Description("Confirmada")]
+            Confirmada,
             [Description("Cancelada")]
             Cancelada,
             [Description("Aplazada")]
             Aplazada,
             [Description("Atendida")]
-            Atendida,
+            Atendida
         }
 
         public static string GetState(int state)

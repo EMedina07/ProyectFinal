@@ -15,5 +15,6 @@ namespace OrientalMedical.Services.Interfaces
         PacienteResponseDTOs GetPacienteDetail(int pacienteId);
         bool IsResgistered(string cedula);
         bool IsNewCedula(int id, string cedula);
+        List<PacienteResponseDTOs> GetAllPacientes();
     }
 }

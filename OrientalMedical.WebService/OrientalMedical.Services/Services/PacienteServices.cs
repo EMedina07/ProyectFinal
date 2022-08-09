@@ -15,6 +15,7 @@ namespace OrientalMedical.Services.Services
     {
         private readonly IRepositoriesWrapper _wrapper = null;
         private readonly IMapper _mapper = null;
+
         public PacienteServices(IRepositoriesWrapper wrapper, IMapper mapper)
         {
             _wrapper = wrapper;
@@ -107,6 +108,22 @@ namespace OrientalMedical.Services.Services
             PacienteResponseDTOs pacienteDTOs = _mapper.Map<PacienteResponseDTOs>(paciente);
 
             return pacienteDTOs;
+        }
+
+        public List<PacienteResponseDTOs> GetAllPacientes()
+        {
+            List<Paciente> pacientes = _wrapper.PacienteRepository.GetAll()
+                                               .Where(p => p.IsActive != false)
+                                               .ToList();
+
+            List<PacienteResponseDTOs> PacientesDTOs = new List<PacienteResponseDTOs>();
+
+            foreach (var item in pacientes)
+            {
+                PacientesDTOs.Add(_mapper.Map<PacienteResponseDTOs>(item));
+            }
+
+            return PacientesDTOs;
         }
     }
 }

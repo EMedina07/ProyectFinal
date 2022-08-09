@@ -18,6 +18,7 @@ namespace OrientalMedical.Damin.Interfaces
         ICienciasMedicasRepository CienciasMedicasRepository { get; }
         IHorarioRepository HorarioRepository { get; }
         IDiasLaborablesRepository DiasLaborablesRepository { get; }
+        IAucenciasRepository AucenciasRepository { get; }
 
         void Save();
     }
