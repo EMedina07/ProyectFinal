@@ -56,8 +56,10 @@ namespace OrientalMedical.Services.Services
             return especialidadDTOs;
         }
 
-        public List<EspecialidadesForSelect> GetEspecialidades(int doctorId)
+        public List<EspecialidadesForSelect> GetEspecialidades(int asistenteId)
         {
+            int doctorId = _wrapper.personalRepository.GetDoctorIdByAsistente(asistenteId);
+
             return  _wrapper.EspecialidadRepository.GetAll()
                             .Where(e => e.DoctorId == doctorId)
                             .Where(e => e.IsActive != false)

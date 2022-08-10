@@ -11,7 +11,7 @@ namespace OrientalMedical.Services.Interfaces
     {
         void CreateEspecialidad(EspecialidadRequestDTOs especialidadDTOs);
         void UpdateEspecialidad(int especialidadId, EspecialidadRequestDTOs especialidadDTOs);
-        List<EspecialidadesForSelect> GetEspecialidades(int doctorId); 
+        List<EspecialidadesForSelect> GetEspecialidades(int asistenteId); 
         EspecialidadResponseDTOs GetEspecialidadDetail(int especialidadId);
         void DeleteEspecialidad(int especialidadId);
         bool IsRegistared(int doctorId, int cienciaMedicaId);

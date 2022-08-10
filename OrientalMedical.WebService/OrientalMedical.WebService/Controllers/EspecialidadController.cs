@@ -22,7 +22,7 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpGet("ObtenerEspecialidad")]
-        public IActionResult GetEsoecialidadByAsistente(int especialidadId)
+        public IActionResult GetEspecialidadByAsistente(int especialidadId)
         {
             try
             {
@@ -52,11 +52,11 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpGet("ObtenerEspecialidadesPorDoctor")]
-        public IActionResult GetEspecialidades(int doctorId)
+        public IActionResult GetEspecialidades(int asistenteId)
         {
             try
             {
-                var especialidades = _services.GetEspecialidades(doctorId);
+                var especialidades = _services.GetEspecialidades(asistenteId);
 
                 return Ok(especialidades);
             }

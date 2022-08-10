@@ -7,6 +7,7 @@ using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
 using OrientalMedical.Shared.DataTranfereObject.ResponseDTOs;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -128,7 +129,7 @@ namespace OrientalMedical.Services.Services
             _wrapper.Save();
         }
 
-        public bool doctorIsAvailable(int asistenteId, DateTime fechaInicio)
+        public bool DoctorIsAvailable(int asistenteId, DateTime fechaInicio)
         {
             int doctorId = _wrapper.personalRepository.GetDoctorIdByAsistente(asistenteId);
 
@@ -155,6 +156,106 @@ namespace OrientalMedical.Services.Services
             }
 
             return true;
+        }
+
+        public bool FechaIsAvailable(int pacienteId, DateTime fechaInicio)
+        {
+            var allCitas = _wrapper.CitasRepository.GetAll()
+                                   .Where(c => c.IsActive != false && c.PacienteId == pacienteId)
+                                   .ToList();
+
+            var fechaCita = DateTime.Parse(fechaInicio.ToString("dd/MM/yyyy"));
+
+            foreach (var item in allCitas)
+            {
+                if(fechaCita == DateTime.Parse(item.FechaCita.ToString("dd/MM/yyyy")))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public bool FechaCitaIsValid(int asistenteId, DateTime fechaCita)
+        {
+            int doctorId = _wrapper.personalRepository.GetDoctorIdByAsistente(asistenteId);
+            var horario = _wrapper.HorarioRepository.GetAll()
+                                          .Where(h => h.IsActive != false && h.DoctorId == doctorId)
+                                          .FirstOrDefault();
+
+            string cita = fechaCita.ToString("HH:mm:ss tt", CultureInfo.InvariantCulture);
+
+            if(TimeSpan.Compare(DateTime.Parse(cita).TimeOfDay, DateTime.Parse(horario.HoraFin).TimeOfDay) >= 0 || TimeSpan.Compare(DateTime.Parse(cita).TimeOfDay, DateTime.Parse(horario.HoraInicio).TimeOfDay) < 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool HoraCitaIsOcuped(int asistenteId, DateTime fechaCitaIngreso)
+        {
+            string cita;
+            int doctorId = _wrapper.personalRepository.GetDoctorIdByAsistente(asistenteId);
+            var citas = _wrapper.CitasRepository.GetAll()
+                                .Where(c => c.IsActive != false && c.DoctorId == doctorId)
+                                .ToList();
+            var fechaCita = DateTime.Parse(fechaCitaIngreso.ToString("dd/MM/yyyy"));
+
+            foreach (var item in citas)
+            {
+                var fechaItem = DateTime.Parse(item.FechaCita.ToString("dd/MM/yyyy"));
+                if (fechaCita == fechaItem)
+                {
+                    cita = fechaCitaIngreso.ToString("HH:mm:ss tt", CultureInfo.InvariantCulture);
+
+                    foreach (var citaCurrent in citas)
+                    {
+                        var fechaC = citaCurrent.FechaCita.ToString("HH:mm:ss tt", CultureInfo.InvariantCulture);
+                        if (TimeSpan.Compare(DateTime.Parse(cita).TimeOfDay, DateTime.Parse(fechaC).TimeOfDay) == 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool HorarioIsValid(int asistenteId, DateTime fechaCita)
+        {
+            int doctorId = _wrapper.personalRepository.GetDoctorIdByAsistente(asistenteId);
+            var horario = _wrapper.HorarioRepository.GetAll()
+                                          .Where(h => h.IsActive != false && h.DoctorId == doctorId)
+                                          .FirstOrDefault();
+
+            var cita = fechaCita.ToString("HH:mm:ss tt", CultureInfo.InvariantCulture);
+
+            int minutoCita = DateTime.Parse(cita).Minute;
+
+            if(minutoCita != 0 || minutoCita != 20)
+            {
+                if(minutoCita != int.Parse(horario.MinutosPorPaciente))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public void DeleteCita(int citaId)
+        {
+            Citas cita = _wrapper.CitasRepository.GetAll()
+                                 .Where(c => c.CitaId == citaId)
+                                 .FirstOrDefault();
+
+            cita.IsActive = false;
+
+            _wrapper.CitasRepository.Update(cita);
+            _wrapper.Save();
         }
     }
 }

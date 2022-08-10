@@ -23,6 +23,21 @@ namespace OrientalMedical.WebService.Controllers
             _services = services;
         }
 
+        [HttpDelete("EliminarCita")]
+        public IActionResult DeleteHorario(int citaId)
+        {
+            try
+            {
+                _services.DeleteCita(citaId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
         [HttpGet("ObtenerEstadosDeCitas")]
         public IActionResult GetCitasState()
         {
@@ -71,25 +86,55 @@ namespace OrientalMedical.WebService.Controllers
         [HttpPost("RegistrarCitas")]
         public IActionResult CreateCitas(int asistenteId, [FromBody] CitasRequestDTOs citasRequestDTOs)
         {
-            
+            try
+            {
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("Objecto no valido");
                 }
 
-                if(!_services.doctorIsAvailable(asistenteId, citasRequestDTOs.FechaCita))
+                if (DateTime.Parse(citasRequestDTOs.FechaCita.ToString("dd/MM/yyyy")).ToString("dddd", new CultureInfo("es-ES")) == "domingo")
+                {
+                    return BadRequest("Favor de ingresar un dia diadefere del Domingo");
+                }
+
+                if (!_services.FechaCitaIsValid(asistenteId, citasRequestDTOs.FechaCita))
+                {
+                    return BadRequest("Horario no valido favor consultar el horario de su doctor");
+                }
+
+                if (!_services.FechaIsAvailable(citasRequestDTOs.PacienteId, citasRequestDTOs.FechaCita))
+                {
+                    return BadRequest($"El paciente ya posee una cita en esta fecha favor de validar con el paciente");
+                }
+
+                if (!_services.DoctorIsAvailable(asistenteId, citasRequestDTOs.FechaCita))
                 {
                     return BadRequest("Doctor no disponible favor consultar las ausencias Programadas");
                 }
 
-               _services.CreateCitas(asistenteId, citasRequestDTOs);
+                if(!_services.HorarioIsValid(asistenteId, citasRequestDTOs.FechaCita))
+                {
+                    return BadRequest("Tiempo por paciente establecido no es valido");
+                }
+
+                if (_services.HoraCitaIsOcuped(asistenteId, citasRequestDTOs.FechaCita))
+                {
+                    return BadRequest("Doctor ya posee una cita programada en este horario");
+                }
+
+                _services.CreateCitas(asistenteId, citasRequestDTOs);
 
                 return Ok();
+            }
+            catch (Exception)
+            {
                 return StatusCode(500, $"Error del servidor");
+            }
         }
 
         [HttpPut("ModicicarCita")]
-        public IActionResult UpdateCita(int citaId, [FromBody] CitasRequestDTOs citasRequestDTOs)
+        public IActionResult UpdateCita(int citaId, int asistenteId, [FromBody] CitasRequestDTOs citasRequestDTOs)
         {
             try
             {
@@ -101,6 +146,36 @@ namespace OrientalMedical.WebService.Controllers
                 if (citaId == 0)
                 {
                     return BadRequest("Id no valido");
+                }
+
+                if (DateTime.Parse(citasRequestDTOs.FechaCita.ToString("dd/MM/yyyy")).ToString("dddd", new CultureInfo("es-ES")) == "domingo")
+                {
+                    return BadRequest("Favor de ingresar un dia diadefere del Domingo");
+                }
+
+                if (!_services.FechaCitaIsValid(asistenteId, citasRequestDTOs.FechaCita))
+                {
+                    return BadRequest("Horario no valido favor consultar el horario de su doctor");
+                }
+
+                if (!_services.FechaIsAvailable(citasRequestDTOs.PacienteId, citasRequestDTOs.FechaCita))
+                {
+                    return BadRequest($"El paciente ya posee una cita en esta fecha favor de validar con el paciente");
+                }
+
+                if (!_services.DoctorIsAvailable(asistenteId, citasRequestDTOs.FechaCita))
+                {
+                    return BadRequest("Doctor no disponible favor consultar las ausencias Programadas");
+                }
+
+                if (!_services.HorarioIsValid(asistenteId, citasRequestDTOs.FechaCita))
+                {
+                    return BadRequest("Tiempo por paciente establecido no es valido");
+                }
+
+                if (_services.HoraCitaIsOcuped(asistenteId, citasRequestDTOs.FechaCita))
+                {
+                    return BadRequest("Doctor ya posee una cita programada en este horario");
                 }
 
                 _services.UpdateCitas(citaId, citasRequestDTOs);
