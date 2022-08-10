@@ -30,7 +30,6 @@ namespace OrientalMedical.Damin.Models.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Server=DESKTOP-NGPA4BO\\SQLEXPRESS;Database=OrientalMedicalSystemDB;Trusted_Connection=True;");
             }
         }
@@ -64,7 +63,7 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Ciencias>(entity =>
             {
                 entity.HasKey(e => e.CienciaId)
-                    .HasName("PK__Ciencias__9A66C71357A7CDA7");
+                    .HasName("PK__Ciencias__9A66C713222CAEC0");
 
                 entity.Property(e => e.Ciencia)
                     .IsRequired()
@@ -75,11 +74,7 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Citas>(entity =>
             {
                 entity.HasKey(e => e.CitaId)
-                    .HasName("PK__Citas__F0E2D9F2585DAC85");
-
-                entity.HasIndex(e => new { e.EspecialidadId, e.DoctorId, e.PacienteId })
-                    .HasName("UQ_Citas")
-                    .IsUnique();
+                    .HasName("PK__Citas__F0E2D9F2166D9351");
 
                 entity.Property(e => e.CitaId).HasColumnName("CitaID");
 
@@ -195,10 +190,6 @@ namespace OrientalMedical.Damin.Models.Context
 
             modelBuilder.Entity<Personal>(entity =>
             {
-                entity.HasIndex(e => new { e.DoctorId, e.PersonalId })
-                    .HasName("UQ_Doctor_Asistente")
-                    .IsUnique();
-
                 entity.Property(e => e.PersonalId).HasColumnName("PersonalID");
 
                 entity.Property(e => e.Apellido)
@@ -232,7 +223,7 @@ namespace OrientalMedical.Damin.Models.Context
             modelBuilder.Entity<Usuarios>(entity =>
             {
                 entity.HasKey(e => e.UsuarioId)
-                    .HasName("PK__Usuarios__2B3DE79841A51071");
+                    .HasName("PK__Usuarios__2B3DE798698222CE");
 
                 entity.Property(e => e.UsuarioId).HasColumnName("UsuarioID");
 

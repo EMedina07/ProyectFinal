@@ -82,11 +82,14 @@ namespace OrientalMedical.Services.Services
                                   .Where(c => c.Estado == 1)
                                   .ToList();
 
-            List<CitasResponseDTOs> citasResponseDTOs = new List<CitasResponseDTOs>();
+            List <CitasResponseDTOs> citasResponseDTOs = new List<CitasResponseDTOs>();
 
             foreach (var item in citas)
             {
-                citasResponseDTOs.Add(_mapper.Map<CitasResponseDTOs>(item));
+                if (DateTime.Compare(DateTime.Parse(item.FechaCita.ToString("dd/MM/yyyy")), DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))) == 0)
+                {
+                    citasResponseDTOs.Add(_mapper.Map<CitasResponseDTOs>(item));
+                }
             }
 
             return citasResponseDTOs;
@@ -235,7 +238,7 @@ namespace OrientalMedical.Services.Services
 
             int minutoCita = DateTime.Parse(cita).Minute;
 
-            if(minutoCita != 0 || minutoCita != 20)
+            if(minutoCita != 0 && minutoCita != 20)
             {
                 if(minutoCita != int.Parse(horario.MinutosPorPaciente))
                 {
