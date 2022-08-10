@@ -15,5 +15,6 @@ namespace OrientalMedical.Services.Interfaces
         List<CitasResponseDTOs> GetByDoctor(int doctorId);
         List<CitaModel> GetByAsistente(int asistenteId, DateTime? fechaInicio, DateTime? fechaFin, int? status);
         void TrabajarCitas(ManejoDeCitasModel manejoDeCitasModel);
+        bool doctorIsAvailable(int asistenteId, DateTime fechaInicio);
     }
 }

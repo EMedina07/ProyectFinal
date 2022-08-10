@@ -127,5 +127,34 @@ namespace OrientalMedical.Services.Services
             _wrapper.CitasRepository.Update(cita);
             _wrapper.Save();
         }
+
+        public bool doctorIsAvailable(int asistenteId, DateTime fechaInicio)
+        {
+            int doctorId = _wrapper.personalRepository.GetDoctorIdByAsistente(asistenteId);
+
+            var ausencias = _wrapper.AucenciasRepository.GetAll()
+                                    .Where(a => a.IsActive != false && a.DoctorId == doctorId)
+                                    .ToList();
+
+            if (ausencias.Count == 0)
+            {
+                return true;
+            }
+
+            var fechaCita = DateTime.Parse(fechaInicio.ToString("dd/MM/yyyy"));
+
+            foreach (var item in ausencias)
+            {
+                var horaInicioEnEspecialidad = DateTime.Parse(item.FechaInicio.ToString("dd/MM/yyyy"));
+                var horaFinEnEspecialidad = DateTime.Parse(item.FechaReintegro.ToString("dd/MM/yyyy"));
+
+                if (fechaCita >= horaInicioEnEspecialidad && fechaCita <= horaFinEnEspecialidad)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

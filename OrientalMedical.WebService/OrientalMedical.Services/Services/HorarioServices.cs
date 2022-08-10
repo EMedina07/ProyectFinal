@@ -103,7 +103,7 @@ namespace OrientalMedical.Services.Services
             Horario horario = _mapper.Map<Horario>(horarioRequestDTOs);
             horario.HorarioId = horarioId;
             horario.DoctorId = _wrapper.HorarioRepository.GetAll()
-                                       .Where(h => h.HorarioId == horarioId)
+                                       .Where(h => h.HorarioId == horarioId && h.IsActive != false)
                                        .FirstOrDefault().DoctorId;
                                        
             horario.IsActive = true;

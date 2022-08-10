@@ -71,21 +71,21 @@ namespace OrientalMedical.WebService.Controllers
         [HttpPost("RegistrarCitas")]
         public IActionResult CreateCitas(int asistenteId, [FromBody] CitasRequestDTOs citasRequestDTOs)
         {
-            try
-            {
+            
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("Objecto no valido");
                 }
 
+                if(!_services.doctorIsAvailable(asistenteId, citasRequestDTOs.FechaCita))
+                {
+                    return BadRequest("Doctor no disponible favor consultar las ausencias Programadas");
+                }
+
                _services.CreateCitas(asistenteId, citasRequestDTOs);
 
                 return Ok();
-            }
-            catch (Exception)
-            {
                 return StatusCode(500, $"Error del servidor");
-            }
         }
 
         [HttpPut("ModicicarCita")]

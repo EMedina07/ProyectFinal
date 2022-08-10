@@ -179,24 +179,28 @@ namespace OrientalMedical.Services.Services
 
         public bool IsDelecte(int userId)
         {
+            bool doctorIsActive = true;
+
             Usuarios user = _wrapper.UserRepository.GetAll()
                                     .Where(u => u.UsuarioId == userId)
                                     .FirstOrDefault();
 
-            bool isPersonalDelete = _wrapper.personalRepository.GetAll()
-                                            .Where(p => p.PersonalId == user.PersonalId)
-                                            .FirstOrDefault().IsActive;
+            var personal = _wrapper.personalRepository.GetAll()
+                                   .Where(p => p.PersonalId == user.PersonalId)
+                                   .FirstOrDefault();
 
-            int doctorId = (int)_wrapper.personalRepository.GetAll()
+            if (personal.DoctorId != null)
+            {
+                int doctorId = (int)_wrapper.personalRepository.GetAll()
                                            .Where(o => o.DoctorId != null)
                                            .FirstOrDefault().DoctorId;
 
-            bool doctorIsActive = _wrapper.personalRepository.GetAll()
-                                            .Where(o => o.PersonalId == doctorId)
-                                            .FirstOrDefault().IsActive;
+                doctorIsActive = _wrapper.personalRepository.GetAll()
+                                         .Where(o => o.PersonalId == doctorId)
+                                         .FirstOrDefault().IsActive;
+            }
 
-
-            if (user.IsActive != true || isPersonalDelete != true || doctorIsActive != true)
+            if (user.IsActive != true || personal.IsActive != true || doctorIsActive != true)
             {
                 return true;
             }
