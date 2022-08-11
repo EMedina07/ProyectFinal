@@ -20,6 +20,7 @@ namespace OrientalMedical.Services.Interfaces
         bool FechaCitaIsValid(int asistenteId, DateTime fechaCita);
         bool HoraCitaIsOcuped(int asistenteId, DateTime fechaCitaIngreso);
         bool HorarioIsValid(int asistenteId, DateTime fechaCita);
+        bool DiaIsAvailable(int asistenteId, DateTime fechaCita);
         void DeleteCita(int citaId);
     }
 }

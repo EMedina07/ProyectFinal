@@ -71,6 +71,19 @@ namespace OrientalMedical.Services.Services
                             .ToList();
         }
 
+        public List<EspecialidadesForSelect> GetEspecialidadesByDoctorId(int doctorId)
+        {
+            return _wrapper.EspecialidadRepository.GetAll()
+                            .Where(e => e.DoctorId == doctorId)
+                            .Where(e => e.IsActive != false)
+                            .Select(e => new EspecialidadesForSelect
+                            {
+                                EspecialidadId = e.EspecialidadId,
+                                Especialidad = e.Ciencia.Ciencia
+                            })
+                            .ToList();
+        }
+
         public bool IsRegistared(int doctorId, int cienciaMedicaId)
         {
             int results = _wrapper.EspecialidadRepository.GetAll()

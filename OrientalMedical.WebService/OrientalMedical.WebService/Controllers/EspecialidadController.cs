@@ -52,11 +52,11 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpGet("ObtenerEspecialidadesPorDoctor")]
-        public IActionResult GetEspecialidades(int asistenteId)
+        public IActionResult GetEspecialidades(int doctorId)
         {
             try
             {
-                var especialidades = _services.GetEspecialidades(asistenteId);
+                var especialidades = _services.GetEspecialidadesByDoctorId(doctorId);
 
                 return Ok(especialidades);
             }

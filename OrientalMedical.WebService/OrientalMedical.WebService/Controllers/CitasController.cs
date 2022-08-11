@@ -93,9 +93,9 @@ namespace OrientalMedical.WebService.Controllers
                     return BadRequest("Objecto no valido");
                 }
 
-                if (DateTime.Parse(citasRequestDTOs.FechaCita.ToString("dd/MM/yyyy")).ToString("dddd", new CultureInfo("es-ES")) == "domingo")
+                if (!_services.DiaIsAvailable(asistenteId, citasRequestDTOs.FechaCita))
                 {
-                    return BadRequest("Favor de ingresar un dia diadefere del Domingo");
+                    return BadRequest("Dia no disponible por favor validar horario del doctor");
                 }
 
                 if (!_services.FechaCitaIsValid(asistenteId, citasRequestDTOs.FechaCita))

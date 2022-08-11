@@ -5,6 +5,7 @@ using OrientalMedical.Services.Interfaces;
 using OrientalMedical.Services.Models;
 using OrientalMedical.Shared.DataTranfereObject.RequestDTOs;
 using OrientalMedical.Shared.DataTranfereObject.ResponseDTOs;
+using OrientalMedical.Shared.Utilities.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -166,13 +167,26 @@ namespace OrientalMedical.Services.Services
             var allCitas = _wrapper.CitasRepository.GetAll()
                                    .Where(c => c.IsActive != false && c.PacienteId == pacienteId)
                                    .ToList();
+            int asistenteId = _wrapper.PacienteRepository.GetAll()
+                                      .Where(p => p.PacienteId == pacienteId)
+                                      .FirstOrDefault().AsistenteId;
 
+            int doctorId = _wrapper.personalRepository.GetDoctorIdByAsistente(asistenteId);
+            var horario = _wrapper.HorarioRepository.GetAll()
+                                          .Where(h => h.IsActive != false && h.DoctorId == doctorId)
+                                          .FirstOrDefault();
+
+            var horaCita = DateTime.Parse(fechaInicio.ToString("HH:mm:ss tt", CultureInfo.InvariantCulture)).TimeOfDay;
             var fechaCita = DateTime.Parse(fechaInicio.ToString("dd/MM/yyyy"));
 
             foreach (var item in allCitas)
             {
-                if(fechaCita == DateTime.Parse(item.FechaCita.ToString("dd/MM/yyyy")))
+                var horaItem = DateTime.Parse(item.FechaCita.ToString("HH:mm:ss tt", CultureInfo.InvariantCulture)).TimeOfDay;
+                var horaItemFinish = DateTime.Parse(item.FechaCita.AddMinutes(int.Parse(horario.MinutosPorPaciente)).ToString("HH:mm:ss tt", CultureInfo.InvariantCulture)).TimeOfDay;
+
+                if (fechaCita == DateTime.Parse(item.FechaCita.ToString("dd/MM/yyyy")))
                 {
+                    if(TimeSpan.Compare(horaCita, horaItem) >= 0 && TimeSpan.Compare(horaCita, horaItemFinish) <= 0)
                     return false;
                 }
             }
@@ -260,5 +274,61 @@ namespace OrientalMedical.Services.Services
             _wrapper.CitasRepository.Update(cita);
             _wrapper.Save();
         }
+
+       public bool DiaIsAvailable(int asistenteId, DateTime fechaCita)
+       {
+            string diaCita = DateTime.Parse(fechaCita.ToString("dd/MM/yyyy")).ToString("dddd", new CultureInfo("es-ES"));
+            
+            if (diaCita == "domingo" || !this.GetDiasLaborables(asistenteId).Contains(diaCita))
+            {
+                return false;
+            }
+
+            return true;
+       }
+
+       private List<string> GetDiasLaborables(int asistenteId)
+       {
+            List<string> dias = new List<string>();
+
+            int doctorId = _wrapper.personalRepository.GetDoctorIdByAsistente(asistenteId);
+            var horario = _wrapper.HorarioRepository.GetAll()
+                                          .Where(h => h.IsActive != false && h.DoctorId == doctorId)
+                                          .FirstOrDefault();
+            List<DiasLaborables> diasLaborables = _wrapper.DiasLaborablesRepository.GetAll()
+                                                          .Where(d => d.IsActive != false)
+                                                          .Where(d => d.HorarioId == horario.HorarioId)
+                                                          .ToList();
+
+            foreach (var item in diasLaborables)
+            {
+                if(item.Lunes != false)
+                {
+                    dias.Add(item.PathOf(i => i.Lunes).ToLower());
+                }
+                if (item.Martes != false)
+                {
+                    dias.Add(item.PathOf(i => i.Martes).ToLower());
+                }
+                if (item.Miecoles != false)
+                {
+                    dias.Add(item.PathOf(i => i.Miecoles).ToLower());
+                }
+                if (item.Jueves != false)
+                {
+                    dias.Add(item.PathOf(i => i.Jueves).ToLower());
+                }
+                if (item.Viernes != false)
+                {
+                    dias.Add(item.PathOf(i => i.Viernes).ToLower());
+                }
+                if (item.Sabado != false)
+                {
+                    dias.Add(item.PathOf(i => i.Sabado).ToLower());
+                }
+            }
+
+            return dias;
+       }
     }
 }
