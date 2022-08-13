@@ -12,8 +12,8 @@ namespace OrientalMedical.Services.Interfaces
         void CreateCitas(int asistenteId, CitasRequestDTOs citasRequestDTOs);
         void UpdateCitas(int citaId, CitasRequestDTOs citasRequestDTOs);
         CitasResponseDTOs GetCitaDetail(int citaId);
-        List<CitasResponseDTOs> GetByDoctor(int doctorId);
-        List<CitaModel> GetByAsistente(int asistenteId, DateTime? fechaInicio, DateTime? fechaFin, int? status);
+        List<CitaModel> GetByDoctor(int doctorId);
+        List<CitaModel> GetByAsistente(int asistenteId, DateTime? fechaInicio, DateTime? fechaFin);
         void TrabajarCitas(ManejoDeCitasModel manejoDeCitasModel);
         bool DoctorIsAvailable(int asistenteId, DateTime fechaCita);
         bool FechaIsAvailable(int pacienteId, DateTime fechaCita);
@@ -21,6 +21,7 @@ namespace OrientalMedical.Services.Interfaces
         bool HoraCitaIsOcuped(int asistenteId, DateTime fechaCitaIngreso);
         bool HorarioIsValid(int asistenteId, DateTime fechaCita);
         bool DiaIsAvailable(int asistenteId, DateTime fechaCita);
+        bool IsFechaInicioMayorQueFechaFin(DateTime fechaInicio, DateTime fechaFin);
         void DeleteCita(int citaId);
     }
 }

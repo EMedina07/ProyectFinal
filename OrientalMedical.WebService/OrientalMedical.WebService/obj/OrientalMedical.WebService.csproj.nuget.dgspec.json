@@ -35,6 +35,9 @@
             "projectReferences": {
               "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.Damin\\OrientalMedical.Damin.csproj": {
                 "projectPath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.Damin\\OrientalMedical.Damin.csproj"
+              },
+              "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.Shared\\OrientalMedical.Shared.csproj": {
+                "projectPath": "C:\\Users\\Dell\\Desktop\\ProyectoFinal\\ProyectFinal\\OrientalMedical.WebService\\OrientalMedical.Shared\\OrientalMedical.Shared.csproj"
               }
             }
           }

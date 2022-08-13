@@ -1,6 +1,7 @@
 ﻿using OrientalMedical.Damin.Interfaces;
 using OrientalMedical.Damin.Models.Context;
 using OrientalMedical.Damin.Models.Entities;
+using OrientalMedical.Shared.Utilities.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,8 @@ namespace OrientalMedical.Core.Repositories
         public bool IsCurrentPassWord(int personalId, string password)
         {
             Usuarios user = this.GetAll().Where(u => u.PersonalId == personalId).FirstOrDefault();
-            
-            if(user.Clave != password)
+
+            if (user.Clave.DesEncriptar() != password)
             {
                 return false;
             }
@@ -36,18 +37,35 @@ namespace OrientalMedical.Core.Repositories
 
         public int GetUserId(string userName, string password)
         {
-            return this.GetAll().Where(u => u.Usuario == userName && u.Clave == password)
-                                 .Select(u => (int)u.PersonalId).FirstOrDefault();
+            int personalId = 0;
+            var users = this.GetAll().Where(u => u.Usuario == userName && u.IsActive != false).ToList();
+
+            foreach (var item in users)
+            {
+                if (item.Clave.DesEncriptar() == password)
+                {
+                    personalId = item.PersonalId;
+                }
+            }
+
+            return personalId;
         }
 
         public bool IsAnUser(string userName, string password)
         {
-            Usuarios user = null;
+            int count = 0;
 
-            user = this.GetAll().Where(u => u.Usuario == userName && u.Clave == password)
-                       .FirstOrDefault();
+            var users = this.GetAll().Where(u => u.Usuario == userName && u.IsActive != false).ToList();
 
-            if(user == null)
+            foreach (var item in users)
+            {
+                if(item.Clave.DesEncriptar() == password)
+                {
+                    count++;
+                }
+            }
+
+            if(count == 0)
             {
                 return false;
             }

@@ -21,8 +21,23 @@ namespace OrientalMedical.WebService.Controllers
             _services = services;
         }
 
+        [HttpGet("ObtenerEspecialidadByAsistente")]
+        public IActionResult GetEspecialidadByAsistente(int asistenteId)
+        {
+            try
+            {
+                var doctor = _services.GetEspecialidadDetail(asistenteId);
+
+                return Ok(doctor);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
+
         [HttpGet("ObtenerEspecialidad")]
-        public IActionResult GetEspecialidadByAsistente(int especialidadId)
+        public IActionResult GetEspecialidad(int especialidadId)
         {
             try
             {

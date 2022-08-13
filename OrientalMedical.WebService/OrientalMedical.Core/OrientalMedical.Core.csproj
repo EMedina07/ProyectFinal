@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OrientalMedical.Damin\OrientalMedical.Damin.csproj" />
+    <ProjectReference Include="..\OrientalMedical.Shared\OrientalMedical.Shared.csproj" />
   </ItemGroup>
 
 </Project>

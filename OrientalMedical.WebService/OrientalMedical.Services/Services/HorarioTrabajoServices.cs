@@ -29,7 +29,7 @@ namespace OrientalMedical.Services.Services
             diasLaborables.Viernes = horarioRequestDTOs.Viernes;
             diasLaborables.Sabado = horarioRequestDTOs.Sabado;
             diasLaborables.HorarioId = _wrapper.HorarioRepository.GetAll()
-                                               .Where(h => h.DoctorId == doctorId)
+                                               .Where(h => h.DoctorId == doctorId && h.IsActive != false)
                                                .FirstOrDefault().HorarioId;
             diasLaborables.IsActive = true;
 
@@ -40,7 +40,7 @@ namespace OrientalMedical.Services.Services
         public void deleteHorario(int horarioId)
         {
             DiasLaborables diasLaborables = _wrapper.DiasLaborablesRepository.GetAll()
-                                                    .Where(d => d.HorarioId == horarioId)
+                                                    .Where(d => d.HorarioId == horarioId && d.IsActive != false)
                                                     .FirstOrDefault();
 
             diasLaborables.IsActive = false;

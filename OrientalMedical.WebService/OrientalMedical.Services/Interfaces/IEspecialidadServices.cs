@@ -16,5 +16,6 @@ namespace OrientalMedical.Services.Interfaces
         EspecialidadResponseDTOs GetEspecialidadDetail(int especialidadId);
         void DeleteEspecialidad(int especialidadId);
         bool IsRegistared(int doctorId, int cienciaMedicaId);
+
     }
 }

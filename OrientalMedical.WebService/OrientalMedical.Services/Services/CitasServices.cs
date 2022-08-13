@@ -35,12 +35,13 @@ namespace OrientalMedical.Services.Services
             _wrapper.Save();
         }
 
-        public List<CitaModel> GetByAsistente(int asistenteId, DateTime? fechaInicio, DateTime? fechaFin, int? status)
+        public List<CitaModel> GetByAsistente(int asistenteId, DateTime? fechaInicio, DateTime? fechaFin)
         {
             int doctorId = (int)_wrapper.personalRepository.GetDoctorIdByAsistente(asistenteId);
 
             List<CitaModel> citas = _wrapper.CitasRepository.GetAll()
                                   .Where(c => c.IsActive != false && c.DoctorId == doctorId)
+                                  .Where(c => c.Paciente.AsistenteId == asistenteId)
                                   .Select(c => new CitaModel()
                                   {
                                       CitaId = c.CitaId,
@@ -53,10 +54,9 @@ namespace OrientalMedical.Services.Services
                                       Comentario = c.Comentario
                                   }).ToList();
 
-            if (fechaInicio != null && fechaFin != null && status != 0)
+            if (fechaInicio != null && fechaFin != null)
             {
-                return citas.Where(c => c.Estado == status)
-                   .Where(c => c.FechaCita >= fechaInicio && c.FechaCita <= fechaFin).ToList();
+                return citas.Where(c => c.FechaCita >= fechaInicio && c.FechaCita <= fechaFin).ToList();
             }
             else
             {
@@ -64,36 +64,39 @@ namespace OrientalMedical.Services.Services
                 {
                     return citas.Where(c => c.FechaCita >= fechaInicio && c.FechaCita <= fechaFin).ToList();
                 }
-                else
-                {
-                    if (status != null)
-                    {
-                        return citas.Where(c => c.Estado == status).ToList();
-                    }
-                }
             }
 
             return citas.ToList();
         }
 
-        public List<CitasResponseDTOs> GetByDoctor(int doctorId)
+        public List<CitaModel> GetByDoctor(int doctorId)
         {
-            List<Citas> citas = _wrapper.CitasRepository.GetAll()
+            List<CitaModel> citas = _wrapper.CitasRepository.GetAll()
                                   .Where(c => c.IsActive != false && c.DoctorId == doctorId)
                                   .Where(c => c.Estado == 1)
-                                  .ToList();
+                                  .Select(c => new CitaModel()
+                                  {
+                                      CitaId = c.CitaId,
+                                      FechaCita = c.FechaCita,
+                                      Especialidad = c.Especialidad.Ciencia.Ciencia,
+                                      Doctor = c.Doctor.Nombre + " " + c.Doctor.Apellido,
+                                      Paciente = c.Paciente.Nombre + " " + c.Paciente.Apellido,
+                                      Telefono = c.Paciente.Telefono,
+                                      Estado = c.Estado,
+                                      Comentario = c.Comentario
+                                  }).ToList();
 
-            List <CitasResponseDTOs> citasResponseDTOs = new List<CitasResponseDTOs>();
+            List<CitaModel> citasDeldia = new List<CitaModel>();
 
             foreach (var item in citas)
             {
                 if (DateTime.Compare(DateTime.Parse(item.FechaCita.ToString("dd/MM/yyyy")), DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))) == 0)
                 {
-                    citasResponseDTOs.Add(_mapper.Map<CitasResponseDTOs>(item));
+                    citasDeldia.Add(item);
                 }
             }
 
-            return citasResponseDTOs;
+            return citasDeldia;
         }
 
         public CitasResponseDTOs GetCitaDetail(int citaId)
@@ -279,6 +282,16 @@ namespace OrientalMedical.Services.Services
        {
             string diaCita = DateTime.Parse(fechaCita.ToString("dd/MM/yyyy")).ToString("dddd", new CultureInfo("es-ES"));
             
+            if(diaCita == "miércoles")
+            {
+                diaCita = "miercoles";
+            }
+
+            if (diaCita == "Sábado")
+            {
+                diaCita = "miercoles";
+            }
+
             if (diaCita == "domingo" || !this.GetDiasLaborables(asistenteId).Contains(diaCita))
             {
                 return false;
@@ -330,5 +343,18 @@ namespace OrientalMedical.Services.Services
 
             return dias;
        }
+
+        public bool IsFechaInicioMayorQueFechaFin(DateTime fechaInicio, DateTime fechaFin)
+        {
+            var fecha1 = DateTime.Parse(fechaInicio.ToString("dd/MM/yyyy"));
+            var fecha2 = DateTime.Parse(fechaFin.ToString("dd/MM/yyyy"));
+
+            if (fecha1 > fecha2)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

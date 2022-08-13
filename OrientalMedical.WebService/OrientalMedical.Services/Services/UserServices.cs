@@ -4,6 +4,7 @@ using OrientalMedical.Damin.Models.Entities;
 using OrientalMedical.Services.Interfaces;
 using OrientalMedical.Services.Models;
 using OrientalMedical.Shared.DataTranfereObject.ResponseDTOs;
+using OrientalMedical.Shared.Utilities.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace OrientalMedical.Services.Services
                 user.Usuario = userName;
             }
 
-            user.Clave = _wrapper.Password;
+            user.Clave = _wrapper.Password.Encriptar();
             user.PersonalId = _wrapper.personalRepository.GetLastId();
             user.Estado = 0;
             user.IsActive = true;
@@ -95,7 +96,7 @@ namespace OrientalMedical.Services.Services
             Usuarios user = _wrapper.UserRepository.GetByFilter(u => u.PersonalId == personalId)
                                     .FirstOrDefault();
 
-            user.Clave = password;
+            user.Clave = password.Encriptar();
             user.Estado = 1;
 
             _wrapper.UserRepository.Update(user);
@@ -107,7 +108,7 @@ namespace OrientalMedical.Services.Services
             Usuarios user = _wrapper.UserRepository.GetByFilter(u => u.UsuarioId == userId)
                                    .FirstOrDefault();
 
-            user.Clave = password;
+            user.Clave = password.Encriptar();
             user.Estado = 0;
 
             _wrapper.UserRepository.Update(user);
@@ -128,7 +129,7 @@ namespace OrientalMedical.Services.Services
 
         public void BloquearUser(string userName)
         {
-            Usuarios user = _wrapper.UserRepository.GetByFilter(u => u.Usuario == userName)
+            Usuarios user = _wrapper.UserRepository.GetByFilter(u => u.Usuario == userName && u.IsActive != false)
                                     .FirstOrDefault();
 
             user.Estado = 2;
@@ -139,7 +140,7 @@ namespace OrientalMedical.Services.Services
 
         public bool UserAlreadyExit(string userName)
         {
-            string userNameFound = _wrapper.UserRepository.GetByFilter(u => u.Usuario == userName)
+            string userNameFound = _wrapper.UserRepository.GetByFilter(u => u.Usuario == userName && u.IsActive != false)
                                     .Select(u => u.Usuario)
                                     .FirstOrDefault();
 

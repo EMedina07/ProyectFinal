@@ -88,6 +88,11 @@ namespace OrientalMedical.WebService.Controllers
         {
             try
             {
+                if (_services.IsFechaInicioMayorQueFechaFin(DateTime.Now, citasRequestDTOs.FechaCita))
+                {
+                    return BadRequest("La fecha de la cita no puede ser mayor a la fecha actual");
+                }
+
                 if (!ModelState.IsValid)
                 {
                     return BadRequest("Objecto no valido");
@@ -214,23 +219,28 @@ namespace OrientalMedical.WebService.Controllers
         }
 
         [HttpGet("ObtenerCitasPorAsistentes")]
-        public IActionResult GetByAsistente(int asistenteId, DateTime? fechaInicio, DateTime? fechaFin, int? Estado, string? doctor, string? especialidad, string? paciente, int? page)
+        public IActionResult GetByAsistente(int asistenteId, DateTime? fechaInicio, DateTime? fechaFin, string? paciente, int? page)
         {
             int records = 10;
             int _page = 0;
             int total_records = 0;
             int total_pages = 0;
 
-            var allCitas = _services.GetByAsistente(asistenteId, fechaInicio, fechaFin, Estado);
+            var allCitas = _services.GetByAsistente(asistenteId, fechaInicio, fechaFin);
 
             try
             {
 
+                if (_services.IsFechaInicioMayorQueFechaFin((DateTime)fechaInicio, (DateTime)fechaFin))
+                {
+                    return BadRequest("La fecha inicio no puede ser mayor a la fecha fin");
+                }
+
                 List<CitaModel> citas = null;
 
-                if (doctor != null || especialidad != null || paciente != null)
+                if (paciente != null)
                 {
-                    citas = allCitas.Where(c => c.Doctor == doctor || c.Especialidad == especialidad || c.Paciente == paciente).ToList();
+                    citas = allCitas.Where(c => c.Paciente == paciente).ToList();
                 }
                 else
                 {

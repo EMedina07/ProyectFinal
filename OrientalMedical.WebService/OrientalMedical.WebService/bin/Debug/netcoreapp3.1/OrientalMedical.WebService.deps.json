@@ -1479,7 +1479,8 @@
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "3.1.2",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.2",
-          "OrientalMedical.Damin": "1.0.0"
+          "OrientalMedical.Damin": "1.0.0",
+          "OrientalMedical.Shared": "1.0.0"
         },
         "runtime": {
           "OrientalMedical.Core.dll": {}

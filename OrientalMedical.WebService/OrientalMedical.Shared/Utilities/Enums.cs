@@ -15,8 +15,6 @@ namespace OrientalMedical.Shared.Utilities
             Confirmada,
             [Description("Cancelada")]
             Cancelada,
-            [Description("Aplazada")]
-            Aplazada,
             [Description("Atendida")]
             Atendida
         }

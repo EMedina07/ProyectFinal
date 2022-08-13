@@ -46,3 +46,5 @@ C:\Users\Dell\Desktop\ProyectoFinal\ProyectFinal\OrientalMedical.WebService\Orie
 C:\Users\Dell\Desktop\ProyectoFinal\ProyectFinal\OrientalMedical.WebService\OrientalMedical.Core\obj\Debug\netcoreapp3.1\OrientalMedical.Core.dll
 C:\Users\Dell\Desktop\ProyectoFinal\ProyectFinal\OrientalMedical.WebService\OrientalMedical.Core\obj\Debug\netcoreapp3.1\OrientalMedical.Core.pdb
 C:\Users\Dell\Desktop\ProyectoFinal\ProyectFinal\OrientalMedical.WebService\OrientalMedical.Core\obj\Debug\netcoreapp3.1\OrientalMedical.Core.genruntimeconfig.cache
+C:\Users\Dell\Desktop\ProyectoFinal\ProyectFinal\OrientalMedical.WebService\OrientalMedical.Core\bin\Debug\netcoreapp3.1\OrientalMedical.Shared.dll
+C:\Users\Dell\Desktop\ProyectoFinal\ProyectFinal\OrientalMedical.WebService\OrientalMedical.Core\bin\Debug\netcoreapp3.1\OrientalMedical.Shared.pdb
